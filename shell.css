@@ -1,0 +1,316 @@
+@charset "UTF-8";
+/* ---------------------------------------------------------------------------
+   shell.css — single owner of page chrome and scene geometry.
+
+   Why this file exists
+   The detail pages used to be a fixed-height app shell: the document could not
+   scroll, #main was a nested scroller, and every chapter was locked to one
+   viewport. Short chapters left half the screen empty; long chapters were cut
+   off with no way to reach the rest; iOS kept the address bar open because the
+   document itself never scrolled. Patch layers then fought each other over the
+   same header, nav and panel properties.
+
+   The contract now
+   - The document is the only scroller. No nested scroll owner on any screen.
+   - Chrome is two sticky rows: site header, then the chapter nav that also
+     carries the chapter counter. Nothing floats over the content.
+   - A chapter is at least one screen tall and grows past it when the content
+     needs the room, so nothing is ever clipped.
+   - Heights use svh, the stable small-viewport unit, so a collapsing iOS
+     address bar never resizes a chapter mid-read.
+
+   This file loads last. It wins on order, not on !important: anything that
+   still carries !important here is neutralising an older layer that does.
+   --------------------------------------------------------------------------- */
+
+body.scene-deck-page {
+  --deck-header: 72px;
+  --deck-nav: 56px;
+  --deck-controls: 0px;
+  --deck-chrome: calc(var(--deck-header) + var(--deck-nav));
+  --scene-height: max(380px, calc(100svh - var(--deck-chrome)));
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.scene-deck-page .site-header {
+  position: sticky;
+  top: 0;
+  height: var(--deck-header);
+  z-index: 90;
+}
+
+.scene-deck-page .project-nav {
+  position: sticky;
+  top: var(--deck-header);
+  height: var(--deck-nav);
+  left: auto;
+  right: auto;
+  width: 100%;
+  margin: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 max(20px, calc((100vw - 1500px) / 2));
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+/* The links scroll sideways on narrow screens; the counter never does. */
+.project-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+}
+
+.project-nav-links::-webkit-scrollbar { display: none; }
+.project-nav-links > a { display: inline-flex; align-items: center; align-self: stretch; flex: 0 0 auto; padding-block: 0; position: relative; }
+/* The current-section underline sits under the row, not through the word. */
+.project-nav-links > a:after { bottom: 9px; top: auto; }
+
+.scene-deck-page #main {
+  height: auto;
+  min-height: 0;
+  margin-top: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+  position: relative;
+}
+
+html { scroll-padding-top: calc(72px + 56px); }
+@media (max-width: 760px) { html { scroll-padding-top: calc(56px + 46px); } }
+
+/* --- chapters ------------------------------------------------------------ */
+
+/* A chapter is sized by what it holds. Only the covers claim a whole screen:
+   forcing every chapter to one was what left half of them empty. */
+.scene-deck-page .scene-panel {
+  height: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  scroll-snap-align: none;
+  scroll-margin-top: var(--deck-chrome);
+  overflow: clip;
+  padding-block: 0;
+}
+
+/* The chapter's own box carries the rhythm, so a chapter that paints its own
+   ground paints it all the way to the edge of the chapter. */
+.scene-deck-page .scene-panel > .scene-content {
+  padding-block: clamp(44px, 6.5vh, 88px);
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+/* Content that paints its own edge-to-edge ground gets no panel padding —
+   otherwise the page colour shows through as a band above and below it. */
+.scene-deck-page .scene-panel > :is(.rental-arrival, .rental-reception, .abyss-threshold,
+  .torba-arrival, .music-overture, .hyeyeon-ice, .hyeyeon-cover, .ice-full, .abyss-passage,
+  .music-campus, .gallery-section, .film-section, .project-updates) {
+  padding-block: 0;
+}
+
+/* Covers claim a whole screen. */
+.scene-deck-page .scene-panel:has(> :is(.rental-arrival, .rental-reception, .abyss-threshold,
+  .torba-arrival, .music-overture, .hyeyeon-ice, .hyeyeon-cover)) {
+  min-height: var(--scene-height);
+}
+
+/* Chapters that want a screen to breathe but keep their own padding. */
+.scene-deck-page .scene-panel:has(> :is(.ice-story-scene, .rental-event-choices,
+  .gallery-section, .poster-gallery)) {
+  min-height: var(--scene-height);
+}
+
+/* Closing chapters are a line and a link. They never needed a screen each. */
+.scene-deck-page .scene-panel:has(> :is(.next-project, .play-guide, .site-footer, .project-updates, .city-settlement)) {
+  min-height: 0;
+}
+.scene-deck-page .scene-panel.scene-end > .scene-content { padding-block: 0; }
+
+/* Full-bleed chapters still fill a screen; they just stop clipping. */
+.scene-deck-page :is(.rental-arrival, .rental-reception, .abyss-threshold, .torba-arrival, .music-overture, .hyeyeon-ice, .hyeyeon-cover) {
+  min-height: var(--scene-height);
+  height: auto;
+}
+
+.scene-deck-page .rental-arrival-copy,
+.scene-deck-page .guild-roster { overflow: visible; max-height: none; }
+
+.scene-deck-page .agency-person-art {
+  height: auto;
+  min-height: 0;
+  max-height: min(58svh, 560px);
+}
+
+/* A chapter's own 3D arrival transform must never widen the document. */
+html { overflow-x: clip; }
+
+/* --- chapter counter, now inside the nav row ------------------------------ */
+
+.scene-controls {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  margin-left: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: inherit;
+  height: 100%;
+  z-index: auto;
+}
+
+.scene-controls .scene-current-title { display: none; }
+
+.scene-controls .scene-page-count {
+  margin: 0 4px 0 0;
+  padding: 0;
+  border: 0;
+  font-size: 13px;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+  opacity: .75;
+  white-space: nowrap;
+}
+
+.scene-controls button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+  border: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 2px;
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  color: inherit;
+  transition: background .18s ease-out, border-color .18s ease-out;
+}
+
+.scene-controls button:hover:not(:disabled) {
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  border-color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+.scene-controls button:active:not(:disabled) { transform: scale(.96); }
+.scene-controls button:disabled { opacity: .28; }
+
+/* --- narrow screens ------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  body.scene-deck-page {
+    --deck-header: 56px;
+    --deck-nav: 46px;
+  }
+
+  .scene-deck-page .site-header { padding-inline: 16px; gap: 12px; }
+  .scene-deck-page .project-nav { padding-inline: 16px; }
+  .project-nav-links { gap: 20px; font-size: 14px; }
+
+  .scene-controls { margin-left: 10px; gap: 4px; }
+  .scene-controls .scene-page-count { font-size: 12px; margin-right: 2px; }
+  .scene-controls button { width: 32px; height: 32px; min-width: 32px; min-height: 32px; font-size: 15px; }
+
+  .scene-deck-page .scene-panel > .page-width.scene-content { padding-block: 28px; }
+}
+
+/* A short landscape phone gets no full-screen chapters at all — one screen is
+   under 300px of usable height there, so the content decides the height. */
+@media (max-height: 520px) and (orientation: landscape) {
+  /* 390px of height cannot spare 128px of chrome. */
+  body.scene-deck-page { --scene-height: auto; --deck-header: 50px; --deck-nav: 40px; }
+  .site-header { height: 50px; }
+  .site-header nav a { min-height: 40px; }
+  .project-nav-links { font-size: 14px; gap: 22px; }
+  .scene-controls button { width: 30px; height: 30px; min-width: 30px; min-height: 30px; font-size: 14px; }
+  .scene-deck-page .scene-panel { min-height: 0; }
+  .scene-deck-page .scene-panel > .scene-content { padding-block: 28px; }
+  .scene-deck-page :is(.rental-arrival, .rental-reception, .abyss-threshold, .torba-arrival, .music-overture, .hyeyeon-ice, .hyeyeon-cover) { min-height: 0; }
+}
+
+/* Bottom safe area for home-indicator phones. */
+.site-footer { padding-bottom: max(40px, calc(28px + env(safe-area-inset-bottom, 0px))); }
+
+/* --- reachable controls ----------------------------------------------------
+   Header, footer and record links were 20–33px tall, and a header nav link was
+   24px wide because its padding ran vertically past the bar it sits in. On a
+   finger that is a miss. These give every standing control a 44px hit area
+   without moving the type, and the vertical insets stay smaller than the gaps
+   around them so no two hit areas overlap. */
+
+.site-header .brand { min-height: 44px; }
+
+.site-header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0;
+  padding-inline: 4px;
+  margin-inline: -4px;
+  white-space: nowrap;
+}
+
+.site-header nav a:after { bottom: 10px; }
+
+@media (pointer: coarse) {
+  .site-header nav a { padding-inline: 5px; margin-inline: -5px; }
+  /* A two-syllable chapter link is 28px of text; the finger needs more. */
+  .project-nav-links > a { padding-inline: 8px; margin-inline: -8px; }
+  .persona-switch,
+  .city-settlement a,
+  .city-return-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
+  .motion-toggle { min-width: 44px; min-height: 44px; }
+  .footer-links a,
+  .site-footer .footer-brand { display: inline-flex; align-items: center; min-height: 44px; }
+  .rw-entry-who { min-height: 38px; }
+  .rw-entry h3 a { display: inline-block; padding-block: 5px; margin-block: -5px; }
+  .rw-work-copy h3 a { display: inline-block; padding-block: 4px; margin-block: -4px; }
+  .music-text-link,
+  .hyeyeon-poster-link,
+  .hyeyeon-inline-link { display: inline-flex; align-items: center; min-height: 44px; }
+  .slot-remove { min-width: 44px; min-height: 44px; }
+  input[type="checkbox"], input[type="radio"] { width: 22px; height: 22px; }
+  input[type="range"] { height: 44px; }
+}
+
+/* The home keeps the same height budget when a phone is held sideways. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .store-home .site-header { height: 50px; }
+  .rw-open { padding-block: 22px 16px; }
+  .rw-stage-frame { height: clamp(220px, 62svh, 340px); }
+}
+
+/* --- Korean line breaking ---------------------------------------------------
+   keep-all already stops words splitting mid-syllable-block. These two stop the
+   other half of the problem: a heading whose last line is one word, and a
+   paragraph that ends on an orphan. */
+:is(h1, h2, h3, h4, .rental-lead, .project-tagline, .journey-heading h3) { text-wrap: balance; }
+:is(p, li, dd, figcaption, blockquote) { text-wrap: pretty; }

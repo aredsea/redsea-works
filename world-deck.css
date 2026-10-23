@@ -1,0 +1,157 @@
+/* Each chapter is a viewport. Long, optional reading stays inside that scene. */
+body.scene-deck-page{--deck-header:72px;--deck-nav:56px}
+
+.scene-deck-page .project-breadcrumb,.scene-deck-page .project-note{display:none}
+.scene-panel{height:var(--scene-height);min-height:var(--scene-height);width:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;isolation:isolate}
+.scene-panel>.scene-content{height:100%;max-height:none;min-height:0;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scroll-snap-align:none;overscroll-behavior-y:auto;scroll-margin-top:0!important;outline-offset:-6px}
+
+.scene-panel>.scene-content:focus:not(:focus-visible){outline:none}
+.scene-deck-page :is(.systems-section,.system-lab,.lab-panel,.guild-experience,.torba-city,.agency-experience,.recital-experience,.rental-after-hours,.rental-after-hours>.page-width,.ice-story){display:contents!important}
+.scene-deck-page :is(.systems-section>.section-heading,.systems-section>.capture-note,.systems-section>.system-explainers,.lab-bar,.lab-footnote,.lab-tabs,.agency-masthead,.recital-masthead,.guild-afterword,.rental-event-note,.city-other){display:none!important}
+
+.scene-deck-page :is(.guild-assembly,.guild-encounter,.city-section,.agency-client,.agency-booking,.agency-date,.agency-after,.recital-introduction,.recital-practice,.recital-notebook){padding-inline:max(35px,calc((100vw - 1380px)/2))!important}
+.scene-deck-page :is(.journey-step,.journey-heading){margin-bottom:25px}
+.scene-deck-page .journey-heading h3{font-size:clamp(28px,3vw,42px)}
+.scene-deck-page .rental-arrival{grid-template-columns:1fr 1.25fr}
+.scene-deck-page .rental-arrival-copy{padding-top:35px;padding-bottom:35px}.scene-deck-page .rental-arrival-copy .eyebrow{margin-top:25px}.scene-deck-page .rental-arrival h1{font-size:clamp(38px,4vw,68px);margin:15px 0}.scene-deck-page .rental-lead{font-size:clamp(25px,2vw,34px);margin-bottom:15px}.scene-deck-page .rental-arrival-copy>p:not(.eyebrow):not(.rental-lead){font-size:16px}.scene-deck-page .rental-seal{height:62px;width:62px;font-size:11px}.scene-deck-page .rental-arrival-art{min-height:0}.scene-deck-page .rental-edition{margin-top:16px}.scene-deck-page .rental-arrival-copy .solid-button{margin-top:18px}
+.scene-deck-page .rental-reception{min-height:0}.scene-deck-page .rental-desk-copy{position:relative;top:auto;padding-block:12vh}.scene-deck-page .project-overview{align-content:center;align-items:center}.scene-deck-page .project-overview>div:first-child{position:static}.scene-deck-page .project-overview .prose{font-size:18px;line-height:1.95}.scene-deck-page .project-facts{margin-top:25px}.scene-deck-page .project-facts>div{padding-block:10px}
+.scene-deck-page .agency-person-layout{grid-template-columns:.8fr 1.2fr;gap:55px}.scene-deck-page .agency-person-art .portrait-frame{height:100%;width:100%}.scene-deck-page .agency-person-art img{height:100%;width:100%;object-fit:contain}.scene-deck-page .agency-person-letter{padding-block:0}.scene-deck-page .agency-person-letter h4{font:clamp(30px,3vw,48px) WorldRental}.scene-deck-page .agency-person-letter>p{font-size:16px;line-height:1.8}.scene-deck-page .agency-featured{margin-top:18px}.scene-deck-page .agency-featured button{max-width:65px}.scene-deck-page .agency-featured img{max-height:85px}.scene-deck-page .appointment-illustration{height:120px;overflow:hidden}.scene-deck-page .agency-booking .rn-demo-header{padding-block:12px}.scene-deck-page .agency-booking :is(.rn-request,.rn-demo-sidebar){padding:24px}.scene-deck-page .agency-date .rn-demo-header{display:none}.scene-deck-page .agency-after .after-layout{min-height:calc(var(--scene-height) - 200px)}
+.scene-deck-page .rental-after-hours .scene-panel{background:#e9dfd5;color:var(--ink)}.scene-deck-page .rental-event-heading{max-width:none;display:flex;flex-direction:column;justify-content:center;padding:60px max(35px,calc((100vw - 1380px)/2))}.scene-deck-page .rental-event-heading h2{font-size:clamp(42px,6vw,90px);max-width:1100px}.scene-deck-page .rental-event-choices{margin:0;padding:40px max(35px,calc((100vw - 1380px)/2)) 65px;gap:60px;align-items:center}.scene-deck-page .rental-event-choices>button{max-height:none;grid-template-columns:1.2fr 1fr;border:0;padding:0}.scene-deck-page .rental-event-choices img{max-height:min(62svh,620px);width:100%;object-fit:contain;box-shadow:none}.scene-deck-page .rental-event-stage{padding:55px max(35px,calc((100vw - 1380px)/2)) 75px}.scene-deck-page .rental-reset{position:static;display:inline-flex;align-items:center;gap:8px;margin:30px 0 0;font-size:15px;background:var(--paper);color:inherit;padding:13px 20px;border:1px solid currentColor;border-color:color-mix(in srgb,currentColor 32%,transparent);border-radius:2px;min-height:46px}.scene-deck-page[data-rental-mode=agency] .rental-reset{display:none}.scene-deck-page[data-rental-mode=akari] .rental-after-hours .scene-panel{background:#22090d}.scene-deck-page[data-rental-mode=ruri] .rental-after-hours .scene-panel{background:repeating-linear-gradient(0deg,#f4dee5 0 43px,#dab1be55 43px 44px)}
+.scene-deck-page .akari-notice{padding-block:25px}.scene-deck-page .akari-notice h3{font-size:clamp(38px,4.5vw,70px)}.scene-deck-page .rental-event-rules{gap:25px}.scene-deck-page .rental-event-rules p{font-size:16px}.scene-deck-page .rental-agency-note{min-height:75%;align-items:center}.scene-deck-page .rental-agency-note h3{font-size:42px}
+.scene-deck-page .abyss-threshold{min-height:var(--scene-height)}.scene-deck-page .abyss-title{padding-top:7vh}.scene-deck-page .abyss-title h1{font-size:clamp(60px,7.5vw,115px)}.scene-deck-page .abyss-title>span{font-size:20px}.scene-deck-page .abyss-passage{min-height:0;padding-block:40px}.scene-deck-page .abyss-passage-sticky{position:relative;top:auto;align-items:center}.scene-deck-page .abyss-passage-copy h2{font-size:38px;margin-block:18px}.scene-deck-page .abyss-passage-copy ol{margin-block:18px}.scene-deck-page .abyss-passage-copy li{padding:12px 0}.scene-deck-page .torba-arrival{padding:40px max(35px,calc((100vw - 1380px)/2)) 65px;display:block;background-image:linear-gradient(90deg,#ddd7bfdc,#ddd7bf66),url(assets/worlds/abyss-gateway.webp);background-size:cover;color:#293d41}.scene-deck-page .torba-seal{display:none}.scene-deck-page .torba-arrival>div:first-child{max-width:800px}.scene-deck-page .torba-arrival h3{font-size:50px}.scene-deck-page .torba-arrival h3 span{display:inline-block;font-size:25px;margin-left:25px}.scene-deck-page .torba-arrival .city-wallet{margin-top:25px;padding:15px 20px}.scene-deck-page .torba-arrival .city-status{position:static;font-size:15px;margin:0;padding:12px 20px}.scene-deck-page .torba-arrival .city-destinations{padding:20px 0 0;gap:14px}.scene-deck-page .city-destinations :is(.city-tile,.city-icon){width:65px;height:65px}.scene-deck-page .city-destinations a{padding:18px}.scene-deck-page .city-heading{margin-bottom:22px}.scene-deck-page .city-host{margin-bottom:20px}.scene-deck-page .city-section{display:flex;flex-direction:column;justify-content:center}.scene-deck-page #city-forge{justify-content:start}.scene-deck-page .guild-dossier{grid-template-columns:.75fr 1.25fr;padding:20px}.scene-deck-page .guild-profile-art{max-height:340px;overflow:hidden}.scene-deck-page .guild-profile-art img{height:340px;width:100%;object-fit:contain}.scene-deck-page .guild-profile-copy h4{font-size:34px}.scene-deck-page .guild-profile-copy p{font-size:16px}.scene-deck-page .guild-roster{max-height:150px}.scene-deck-page .guild-roster>button{flex-basis:85px}.scene-deck-page .guild-roster-tools{margin-top:20px}.scene-deck-page .guild-encounter .journey-heading{margin-bottom:15px}.scene-deck-page .guild-encounter .journey-heading h3{font-size:31px}.scene-deck-page .enemy-stage{padding-block:20px}.scene-deck-page .enemy-medallion{width:95px;height:95px}.scene-deck-page .encounter-allies{padding-block:15px}.scene-deck-page .abyss-chronicle{align-content:center}.scene-deck-page .chronicle-number{position:static}.scene-deck-page .chronicle-pages{margin-block:25px}
+.scene-deck-page .music-overture{padding-bottom:0}.scene-deck-page .music-score-heading{padding-block:20px}.scene-deck-page .music-title-spread{padding-block:20px}.scene-deck-page .music-title-spread h1{font-size:clamp(35px,3.4vw,55px)}.scene-deck-page .music-overture-image{height:46vh}.scene-deck-page .music-overture-image img{height:100%;width:100%;object-fit:cover}.scene-deck-page .music-sleeve-note{padding-block:20px}.scene-deck-page .music-sleeve-note>a:first-child{display:none}.scene-deck-page .music-score-strip{height:36px}.scene-deck-page .music-campus-picture{height:45vh;min-height:0}.scene-deck-page .music-campus-ledger{padding-block:40px}.scene-deck-page .recital-introduction .recital-partner{grid-template-columns:.8fr 1.2fr;gap:45px}.scene-deck-page .recital-person-art{max-height:calc(var(--scene-height) - 220px);overflow:hidden}.scene-deck-page .recital-person-art img{height:100%;width:100%;object-fit:contain}.scene-deck-page .recital-score-line{display:none}.scene-deck-page .music-appendix{padding-top:12vh}
+.scene-deck-page .hyeyeon-ice{min-height:var(--scene-height)}.scene-deck-page .ice-word{font-size:clamp(130px,20vw,320px);margin-block:10px}.scene-deck-page .ice-story-scene{min-height:0;max-width:none;padding:60px max(40px,calc((100vw - 1380px)/2));justify-content:center}.scene-deck-page .ice-full-text{padding-top:15vh}.scene-deck-page .hyeyeon-cover{padding-top:35px}.scene-deck-page .hyeyeon-cover-grid{min-height:0;padding-block:25px}.scene-deck-page .hyeyeon-cover-photo{max-height:65vh}.scene-deck-page .hyeyeon-chapter-head{margin-bottom:30px}.scene-deck-page .hyeyeon-chapter-head h2{font-size:clamp(30px,3.5vw,48px)}.scene-deck-page .hyeyeon-personal{padding-block:45px}.scene-deck-page .hyeyeon-day{padding-block:40px}.scene-deck-page .hyeyeon-engine{padding-block:40px}.scene-deck-page .hyeyeon-hours li{padding-block:18px}.scene-deck-page .hyeyeon-hours h3{font-size:22px}.scene-deck-page .hyeyeon-hours p{font-size:16px}.scene-deck-page .hyeyeon-engine-paper{padding:30px}.scene-deck-page .hyeyeon-engine-heading{margin-bottom:24px}
+.scene-current-title{font-size:13px;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scene-page-count{font:13px Arial;border-left:1px solid #a4b195;padding-left:14px;margin-left:8px;white-space:nowrap}.scene-controls button{width:36px;height:36px;border:1px solid #8b9b7c66;background:#fffdf6;font-size:20px;line-height:1;color:#3d5036}.scene-controls button:disabled{opacity:.3}.project-abyss .scene-controls button{background:#30484d;color:#eadfc2;border-color:#9caa9955}.scene-end .site-footer{width:100%;max-width:none;display:flex;align-items:center;justify-content:space-between;padding-inline:max(35px,calc((100vw - 1380px)/2))}
+.motion-enabled.project-rental .scene-panel.has-arrived>.scene-content{animation:agency-scene .85s cubic-bezier(.2,.7,.2,1) both}.motion-enabled.project-abyss .scene-panel.has-arrived>.scene-content{animation:abyss-scene 1.1s cubic-bezier(.2,.7,.2,1) both}.motion-enabled.project-music .scene-panel.has-arrived>.scene-content{animation:music-scene .95s cubic-bezier(.2,.7,.2,1) both}.motion-enabled.project-hyewon .scene-panel.has-arrived>.scene-content{animation:journal-scene 1.2s ease-out both}
+@keyframes agency-scene{from{opacity:.45;clip-path:inset(0 0 7% 0)}to{opacity:1;clip-path:inset(0)}}@keyframes abyss-scene{from{opacity:.35;filter:brightness(.62)}to{opacity:1;filter:brightness(1)}}@keyframes music-scene{from{opacity:.3;translate:28px 0}to{opacity:1;translate:0 0}}@keyframes journal-scene{from{opacity:.25;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+@media(max-width:900px){.scene-current-title{display:none}.scene-page-count{border:0;padding:0;margin:0}.scene-deck-page .rental-event-choices{gap:30px}.scene-deck-page .rental-event-choices>button{display:flex;flex-direction:column;gap:15px}.scene-deck-page .rental-event-choices img{max-height:48vh}.scene-deck-page .rental-event-choices span{gap:12px}.scene-deck-page .rental-event-choices b{font-size:24px}}
+@media(max-width:760px){body.scene-deck-page{--deck-header:68px;--deck-nav:54px}.scene-deck-page .project-nav{padding:13px 20px;font-size:14px;gap:25px}.scene-panel>.page-width.scene-content{padding-block:35px 80px}.scene-deck-page :is(.guild-assembly,.guild-encounter,.city-section,.agency-client,.agency-booking,.agency-date,.agency-after,.recital-introduction,.recital-practice,.recital-notebook){padding:30px 20px 80px!important}.scene-deck-page .rental-arrival{display:flex;flex-direction:column;grid-template-columns:none}.scene-deck-page .rental-arrival-art{order:-1;height:clamp(240px,38svh,360px);min-height:0;flex:0 0 auto}.scene-deck-page .rental-arrival-copy{padding:28px 24px 48px}.scene-deck-page .rental-seal{display:none}.scene-deck-page .rental-arrival-copy .eyebrow{margin:0;font-size:13px}.scene-deck-page .rental-arrival h1{font-size:38px;margin:9px 0}.scene-deck-page .rental-lead{font-size:23px;line-height:1.55}.scene-deck-page .rental-arrival-copy>p:not(.eyebrow):not(.rental-lead){font-size:16px;line-height:1.9}.scene-deck-page .rental-edition{font-size:12px}.scene-deck-page .rental-cover-note{width:90px;bottom:15px;right:20px;padding:5px}.scene-deck-page .rental-cover-note span{display:none}.scene-deck-page .rental-desk-copy{padding:70px 24px}.scene-deck-page .rental-desk-copy h2{font-size:35px}.scene-deck-page .agency-person-layout{grid-template-columns:1fr;gap:22px}.scene-deck-page .agency-person-art{height:35vh;max-height:none}.scene-deck-page .agency-person-letter h4{font-size:32px}.scene-deck-page .agency-featured{display:none}.scene-deck-page .agency-person-letter .letter-trait{display:none}.scene-deck-page .rental-event-heading{padding:45px 24px 90px}.scene-deck-page .rental-event-heading h2{font-size:40px}.scene-deck-page .rental-event-choices{padding:30px 24px 80px;gap:20px}.scene-deck-page .rental-event-choices img{max-height:38vh}.scene-deck-page .rental-event-choices>button{justify-content:center}.scene-deck-page .rental-event-choices b{font-size:22px}.scene-deck-page .rental-event-choices em{font-size:13px}.scene-deck-page .rental-event-stage{padding:30px 24px 90px}.scene-deck-page .rental-reset{left:12px;bottom:12px;font-size:12px;padding:13px 10px}.scene-deck-page .akari-notice h3{font-size:36px}.scene-deck-page .rental-agency-note h3{font-size:30px}.scene-deck-page .abyss-title{padding:40px 24px}.scene-deck-page .abyss-title h1{font-size:64px}.scene-deck-page .abyss-title>span{font-size:18px}.scene-deck-page .abyss-hero-poster{width:90px;bottom:75px}.scene-deck-page .abyss-depth-mark{bottom:70px}.scene-deck-page .abyss-passage{padding:30px 24px 80px}.scene-deck-page .abyss-passage-sticky{display:block;height:auto}.scene-deck-page .abyss-map-frame{max-height:none;margin-bottom:20px}.scene-deck-page .abyss-map-frame img{max-height:none}.scene-deck-page .abyss-passage-copy h2{font-size:29px}.scene-deck-page .torba-arrival{padding:30px 20px 80px}.scene-deck-page .torba-arrival h3{font-size:40px}.scene-deck-page .torba-arrival h3 span{font-size:20px;margin-left:15px}.scene-deck-page .torba-arrival>div:first-child>p:last-child{font-size:15px}.scene-deck-page .city-destinations a{padding:12px}.scene-deck-page .city-destinations :is(.city-icon,.city-tile){width:48px;height:48px}.scene-deck-page .city-section{justify-content:start}.scene-deck-page .guild-dossier{display:block}.scene-deck-page .guild-profile-art{height:32vh;max-height:none}.scene-deck-page .guild-profile-art img{height:32vh}.scene-deck-page .guild-profile-copy h4{font-size:30px}.scene-deck-page .enemy-medallion{width:66px;height:66px}.scene-deck-page .music-overture-image{height:33vh}.scene-deck-page .music-title-spread h1{font-size:34px}.scene-deck-page .music-title-spread p{font-size:15px}.scene-deck-page .music-title-spread{padding-block:20px}.scene-deck-page .music-sleeve-note{padding-block:20px}.scene-deck-page .recital-introduction .recital-partner{display:block}.scene-deck-page .recital-person-art{height:32vh;max-height:none}.scene-deck-page .recital-person-art img{height:32vh}.scene-deck-page .music-campus-picture{height:40vh}.scene-deck-page .hyeyeon-cover-grid{padding-block:20px}.scene-deck-page .hyeyeon-cover-photo{max-height:40vh}.scene-deck-page .ice-story-scene{padding:45px 24px 90px}.scene-deck-page .ice-word{font-size:39vw}.scene-deck-page .ice-bottom{bottom:85px}.scene-deck-page .hyeyeon-chapter-head h2{font-size:30px}.scene-deck-page .hyeyeon-engine-paper{padding:22px}.scene-end .site-footer{display:flex;flex-direction:column;align-items:start;justify-content:center;gap:40px;padding:40px 24px 90px}}
+/* Keep the artwork's atlas geometry; size the frame, never the source image. */
+.scene-deck-page .music-overture{display:grid;grid-template-rows:55px 180px minmax(180px,1fr) 120px;overflow:hidden!important}
+.scene-deck-page.project-music .music-overture-image>.detail-image{object-fit:cover;clip-path:none}
+.scene-deck-page .music-play-seal{bottom:20px;right:25px;width:105px;height:105px;background:#faf6eeed;box-shadow:0 0 0 5px #faf6ee55}
+.scene-deck-page .music-play-seal>span{font-size:25px;margin:0}
+.scene-deck-page .music-play-seal strong{font-size:17px}
+.scene-deck-page .music-play-seal small{font-size:11px;margin-top:5px}
+.scene-deck-page .music-overture>*{min-width:0;max-width:100%}
+.scene-deck-page .music-overture-image{min-height:clamp(260px,42svh,440px)}
+.scene-deck-page .music-score-strip{display:none}
+.scene-deck-page .music-sleeve-note{display:flex;align-items:center;justify-content:space-between;gap:30px;padding-block:15px}
+.scene-deck-page .music-sleeve-note p{min-width:0;font-size:16px;line-height:1.7}
+.scene-deck-page .recital-partner>.recital-people{grid-column:1/-1;grid-row:1;margin:0;padding:0;border:0;max-width:580px}
+.scene-deck-page .recital-partner>.recital-people button{display:flex;align-items:center;gap:12px;padding:8px;text-align:left}
+.scene-deck-page .recital-partner>.recital-people .journey-portrait{height:55px;width:40px;flex:0 0 40px}
+.scene-deck-page .recital-introduction .recital-partner{row-gap:20px}
+.scene-deck-page .guild-encounter:before{display:none}
+.scene-deck-page .engraved-enemy:disabled:not(.defeated),.scene-deck-page .encounter-allies>button:disabled{opacity:1}
+.scene-deck-page .encounter-controls :is(h4,p,.actor-caption,.actor-caption small,.target-instruction){color:#34433f}
+.scene-deck-page .encounter-controls .encounter-skills>button{background:#172c36;color:#f0e4c8}
+.scene-deck-page .encounter-controls .encounter-skills :is(small,em){color:#c5d4d4}
+.scene-deck-page .recital-person-art .full-portrait{height:min(54vh,480px);width:auto;margin:auto}
+.scene-deck-page .recital-person-art .full-portrait img{height:auto;max-width:none;object-fit:initial}
+.scene-deck-page :is(.abyss-threshold,.hyeyeon-ice){overflow:hidden!important}
+.scene-deck-page .music-appendix{padding-top:40px}
+.scene-deck-page .music-appendix summary{cursor:default}
+.scene-deck-page .music-appendix summary i{display:none}
+.scene-deck-page .music-appendix .gallery-section{padding:20px 0 0;width:100%}
+.scene-deck-page .music-appendix .section-heading{display:none}
+.scene-deck-page .music-appendix .gallery-grid{display:flex;gap:28px;overflow-x:auto;padding:15px 5px 25px;scroll-snap-type:x mandatory}
+.scene-deck-page .music-appendix .gallery-grid figure{flex:0 0 29%;margin:0;scroll-snap-align:start}
+.scene-deck-page .music-appendix .gallery-grid img{height:50vh;object-fit:contain}
+.scene-deck-page .ice-story-question .ice-full-text{padding:0;margin:30px 0 0;width:100%;max-width:900px;flex-shrink:0}
+.scene-deck-page .ice-story-question:has(details[open]){justify-content:flex-start}
+.scene-deck-page .hyeyeon-event-chapter,.scene-deck-page .hyeyeon-memory-chapter{display:flex;flex-direction:column;justify-content:center;background:linear-gradient(120deg,#eceff6,#f6f1ed)}
+.scene-deck-page .hyeyeon-event-chapter .hyeyeon-event-line{padding:55px 0;border-block:1px solid #bdc8d7}
+.scene-deck-page .hyeyeon-memory-chapter .hyeyeon-memory-pair{margin:15px 0 30px}
+.scene-deck-page .hyeyeon-memory-chapter .hyeyeon-engine-status{max-width:900px}
+.scene-deck-page .music-instrument>.demo-actions{justify-content:center;margin:0 0 12px}
+.scene-deck-page .music-disc{width:min(100%,250px);margin-block:10px 15px}
+.scene-deck-page .music-pads{max-width:280px}
+.scene-deck-page .music-demo-heading{padding-bottom:12px;margin-bottom:15px}
+.scene-deck-page .appointment-illustration{height:55px;margin:10px 0}
+.scene-deck-page .appointment-illustration img{height:55px;width:55px}
+.scene-deck-page .appointment-illustration>span{font-size:18px}
+.scene-deck-page .agency-booking .rn-offer-facts{margin-block:15px;gap:10px}
+.scene-deck-page .agency-booking .rn-mood{margin-block:12px}
+.scene-deck-page .agency-booking blockquote{margin-block:15px;font-size:21px}
+.scene-deck-page .agency-booking .demo-actions{margin-top:15px}
+.scene-deck-page .guild-encounter .encounter-board{display:flex;flex-direction:column;padding:20px 25px}
+.scene-deck-page .encounter-controls{order:1;position:sticky;bottom:0;z-index:5;padding:15px;background:#ded5bd;box-shadow:0 -10px 20px #24383415}
+.scene-deck-page .encounter-log{order:2;max-height:85px;overflow:auto}
+.scene-deck-page .encounter-note{order:3;font-size:14px;margin-top:12px}
+.scene-deck-page .encounter-allies{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.scene-deck-page .encounter-allies>button{padding:10px;gap:10px}
+.scene-deck-page .encounter-allies .journey-portrait{height:80px;width:45px;min-height:0}
+.scene-deck-page .encounter-allies .ally-readout>span{font-size:13px}
+.scene-deck-page .encounter-allies .ally-readout label{font-size:13px}
+.scene-deck-page .guild-profile-art,.scene-deck-page .guild-profile-art img{max-height:230px;height:230px}
+.scene-deck-page .guild-profile-art .journey-portrait{height:230px;min-height:0}
+.scene-deck-page .guild-profile-copy{padding-top:5px}
+.scene-deck-page .guild-profile-copy .guild-hook{margin-block:12px}
+.scene-deck-page .guild-dossier{padding:15px;gap:20px}
+.scene-deck-page .guild-signature{margin-top:12px;padding-top:12px}
+.scene-deck-page .guild-roster{max-height:100px}
+@media(max-width:760px){
+ .scene-deck-page .music-overture{grid-template-rows:42px 172px minmax(160px,1fr) 145px}
+ .scene-deck-page .music-image-caption{bottom:15px;font-size:12px;max-width:55%}
+ .scene-deck-page .music-play-seal{bottom:18px;right:15px;width:85px;height:85px}
+ .scene-deck-page .music-play-seal strong{font-size:15px}
+ .scene-deck-page .music-sleeve-note{display:block;padding-block:12px}
+ .scene-deck-page .music-sleeve-note p{font-size:14px;line-height:1.65;margin:0 0 8px}
+ .scene-deck-page .music-sleeve-note .music-text-link{font-size:14px;margin:0}
+ .scene-deck-page .music-title-spread{padding-block:10px;gap:8px}
+ .scene-deck-page .music-title-spread .music-side-note{display:none}
+ .scene-deck-page .music-title-spread{grid-template-columns:minmax(0,1fr);align-content:center}
+ .scene-deck-page .music-overture{grid-template-columns:minmax(0,1fr);padding-top:0}
+ .scene-deck-page .music-sleeve-note p{white-space:normal;overflow-wrap:anywhere}
+ .scene-deck-page .music-title-spread h1{font-size:30px}
+ .scene-deck-page .music-title-spread p{margin:0;font-size:14px}
+ .scene-deck-page .recital-partner>.recital-people{margin-bottom:20px;gap:6px}
+ .scene-deck-page .recital-partner>.recital-people button{gap:5px;padding:5px}
+ .scene-deck-page .recital-partner>.recital-people .journey-portrait{height:45px;width:24px;flex-basis:24px}
+ .scene-deck-page .recital-partner>.recital-people button>span:last-child{font-size:12px}
+ .scene-deck-page .recital-person-art .full-portrait{height:32vh}
+ .scene-deck-page .recital-person-art .full-portrait img{height:auto}
+ .scene-deck-page .recital-practice{padding-top:20px!important}
+ .scene-deck-page .recital-practice .journey-heading{margin-bottom:15px}
+ .scene-deck-page .recital-practice .music-preview{padding:15px}
+ .scene-deck-page .recital-practice .music-demo-heading{display:none}
+ .scene-deck-page .music-instrument{padding:0}
+ .scene-deck-page .music-disc{width:190px}
+ .scene-deck-page .disc-center>strong{font-size:25px;margin:2px}
+ .scene-deck-page .disc-center>small{font-size:10px}
+ .scene-deck-page .disc-center>span{font-size:11px}
+ .scene-deck-page .music-pads{max-width:230px}
+ .scene-deck-page .music-live{margin-top:12px}
+ .scene-deck-page .music-practice-layout{gap:20px}
+ .scene-deck-page .music-practice-guide{padding-top:15px;border-top:1px solid #cdbbb8}
+ .scene-deck-page .music-practice-guide h4{font-size:22px;margin-block:12px}
+ .scene-deck-page .music-appendix .gallery-grid figure{flex-basis:82%}
+ .scene-deck-page .music-appendix .gallery-grid img{height:46vh}
+ .scene-deck-page .hyeyeon-engine .hyeyeon-chapter-head{margin-bottom:18px}
+ .scene-deck-page .hyeyeon-engine .hyeyeon-engine-paper{padding:15px}
+ .scene-deck-page .hyeyeon-axis-list article{padding:12px 0;grid-template-columns:20px 65px 1fr;gap:8px}
+ .scene-deck-page .hyeyeon-engine-heading{margin-bottom:12px}
+ .scene-deck-page .hyeyeon-engine-heading>span,.scene-deck-page .hyeyeon-axis-caption{display:none}
+ .scene-deck-page .hyeyeon-engine-heading>strong{font-size:21px}
+ .scene-deck-page .hyeyeon-engine-heading p{font-size:15px}
+ .scene-deck-page .hyeyeon-event-chapter .hyeyeon-event-line{padding:15px 0;margin:10px 0}
+ .scene-deck-page .hyeyeon-memory-pair article{padding:20px}
+ .scene-deck-page .hyeyeon-memory-chapter .hyeyeon-engine-status{font-size:14px;line-height:1.8}
+ .scene-deck-page .encounter-allies{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .scene-deck-page .guild-encounter .encounter-board{padding:12px}
+ .scene-deck-page .encounter-allies .journey-portrait{height:55px;width:30px}
+ .scene-deck-page .encounter-allies>button{padding:7px;gap:7px}
+ .scene-deck-page .encounter-controls{position:static}
+ .scene-deck-page .battle-invite p{display:none}
+ .scene-deck-page .battle-invite button{margin-top:8px}
+ .scene-deck-page .agency-booking .journey-description{font-size:14px}
+ .scene-deck-page .agency-booking .rn-demo-sidebar{padding-top:15px}
+ .scene-deck-page .agency-booking .rn-request{padding:15px}
+ .scene-deck-page .agency-booking .rn-person h3{font-size:22px}
+ .scene-deck-page .agency-booking .rn-person{gap:12px}
+ .scene-deck-page .agency-booking .rn-monogram{width:40px;height:40px}
+ .scene-deck-page .agency-booking .rn-offer-facts{grid-template-columns:1fr 1fr;padding-block:12px}
+}
+@media(max-height:650px){.scene-deck-page :is(.music-overture,.abyss-threshold,.hyeyeon-ice){overflow-y:auto!important}.scene-deck-page .ice-word{font-size:clamp(90px,20vh,150px)}.scene-deck-page .ice-opening{padding:30px 0 90px}.scene-deck-page .ice-bottom{display:none}}
+.motion-reduced .scene-panel>.scene-content{animation:none!important;filter:none!important;transform:none!important}.motion-reduced #main{scroll-behavior:auto}@media(prefers-reduced-motion:reduce){.scene-panel>.scene-content{animation:none!important;filter:none!important;transform:none!important}.scene-deck-page #main{scroll-behavior:auto}}

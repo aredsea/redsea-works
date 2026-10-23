@@ -1,0 +1,64 @@
+/* Backdrops establish the scene; independent posters identify each work. */
+.feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{
+ display:block;position:absolute;z-index:3;right:8%;top:46%;bottom:auto;
+ width:clamp(240px,23vw,350px);height:auto;max-height:none;
+ transform:translateY(-50%);border:1px solid #1c1c1c40;border-radius:6px;
+ overflow:hidden;background:#101614;box-shadow:0 24px 70px #0009,0 3px 12px #0006;
+ transition:box-shadow .35s ease,translate .35s ease;
+}
+.feature-poster.cinematic-inset img,.cinematic-hero .project-cover.cinematic-inset img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+.feature-poster.cinematic-inset.hyewon img,.cinematic-hero .project-cover.cinematic-inset.hyewon img{aspect-ratio:2/3;object-fit:cover}
+.feature-poster.cinematic-inset:hover{translate:0 -6px;box-shadow:0 32px 80px #000a,0 0 0 1px #1c1c1c50}
+.poster-title{position:absolute;bottom:0;left:0;right:0;padding:70px 24px 26px;background:linear-gradient(transparent,#07110fe8);font-size:25px;line-height:1.4;font-weight:600;color:#fff9ea;text-shadow:0 2px 8px #0008;word-break:keep-all}
+.feature-poster .poster-corner{z-index:1;bottom:14px;right:14px}
+.feature-poster:has(.poster-title) .poster-corner{top:14px;bottom:auto}
+.cinematic-hero .project-cover.cinematic-inset{right:9%;top:50%;margin:0}
+@media(min-width:761px){
+ .cinematic-hero .project-intro{position:relative;z-index:3}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{right:5%;width:clamp(210px,26vw,280px)}
+}
+@media(max-width:760px){
+ .feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{right:20px;top:14px;width:clamp(96px,27vw,170px);transform:none;z-index:3;border-radius:4px;box-shadow:0 10px 30px #0009}
+ .poster-title{padding:35px 10px 12px;font-size:14px;line-height:1.4}
+ .feature-poster .poster-corner{width:26px;height:26px;font-size:16px;right:6px;bottom:6px}
+ .feature-poster:has(.poster-title) .poster-corner{top:6px}
+}
+@media(prefers-reduced-motion:reduce){.feature-poster.cinematic-inset{transition:none}.feature-poster.cinematic-inset:hover{translate:none}}
+.motion-reduced .feature-poster.cinematic-inset{transition:none}
+
+/* Keep the page gutter outside the reading measure on ultrawide screens. */
+:root{--hero-gutter:max(52px,calc((100% - 1500px)/2))}
+.feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{
+ border:1px solid #f4ebd3b3;padding:6px;background:#e8e1ce;
+ box-shadow:0 0 0 1px #0009,0 26px 85px 10px #000c,0 3px 14px #000b;
+}
+.feature-poster.cinematic-inset img,.cinematic-hero .project-cover.cinematic-inset img{border-radius:2px}
+.feature-poster.cinematic-inset:hover{box-shadow:0 0 0 2px #f2d9ac,0 32px 95px 10px #000d}
+.feature-background img,.cinematic-hero .project-landscape img{filter:brightness(.62) saturate(.85)}
+@media(min-width:761px){
+ .feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{
+  right:var(--hero-gutter);top:46%;height:65%;max-height:620px;width:auto;max-width:none;
+ }
+ .feature-poster.rental,.project-cover.rental{aspect-ratio:853/1280}
+ .feature-poster.abyss,.project-cover.abyss{aspect-ratio:941/1672}
+ .feature-poster.music,.project-cover.music{aspect-ratio:1122/1402}
+ .feature-poster.hyewon,.project-cover.hyewon{aspect-ratio:2/3}
+ .feature-poster.cinematic-inset img,.cinematic-hero .project-cover.cinematic-inset img{height:100%;width:100%;object-fit:contain}
+ .feature-poster.cinematic-inset.hyewon img,.cinematic-hero .project-cover.cinematic-inset.hyewon img{object-fit:cover}
+ .cinematic-hero .project-cover.cinematic-inset{top:50%}
+ .cinematic-hero{padding-inline:var(--hero-gutter)}
+}
+@media(min-width:761px) and (max-width:1100px){
+ :root{--hero-gutter:32px}
+ .feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{height:390px}
+}
+@media(max-width:760px){
+ .cinematic-background,.cinematic-hero .project-landscape{height:clamp(300px,72vw,430px);aspect-ratio:auto}
+ .cinematic-background img,.cinematic-hero .project-landscape img{object-fit:cover;object-position:46% 50%!important;filter:brightness(.55) saturate(.8)}
+ .feature-poster.cinematic-inset,.cinematic-hero .project-cover.cinematic-inset{top:24px;right:22px;width:clamp(135px,36vw,210px);padding:4px;border-radius:5px}
+ .feature-poster.cinematic-inset img,.cinematic-hero .project-cover.cinematic-inset img{max-height:calc(clamp(300px,72vw,430px) - 56px);width:100%;object-fit:contain}
+ .feature-poster.cinematic-inset.hyewon img,.cinematic-hero .project-cover.cinematic-inset.hyewon img{object-fit:cover}
+ .feature-rail .rail-art.cinematic-rail{flex-basis:82px;width:82px;height:54px;display:block}
+}

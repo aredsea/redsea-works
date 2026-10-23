@@ -1,0 +1,81 @@
+/* Readable text across the portfolio and each work's own UI. */
+:root{--reading-size:18px;--label-size:14px}
+body{font-size:18px;line-height:1.65;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+p{word-break:keep-all;overflow-wrap:break-word}
+button,input,select,textarea{font-family:inherit}
+input,select,textarea{font-size:16px!important}
+button{line-height:1.5}
+.prose,.work-item>p,.feature-summary,.project-summary,.cast-story,.cast-intro,.system-copy p,.scene-grid article>p,.scene-grid blockquote,.about-section p:not(.eyebrow),.journal-item p,.credits-block p,.credits-list dd,.play-guide li{font-size:18px;line-height:1.85}
+.feature-summary,.project-summary{color:#d0d3cb}
+.section-heading>p,.capture-note,.journey-description,.location-caption>p:last-child,.location-route p,.guild-profile-copy>p:not([class]),.guild-signature dd,.rental-dossier p,.music-companion p,.city-section p,.city-note{font-size:17px;line-height:1.8}
+.cast-story{color:#c0c9d5}.cast-traits,.roster-name small{color:#a3afc1}
+.eyebrow,.feature-kicker,.feature-genre,.journey-heading>div>p,.store-masthead,.lab-bar>span{letter-spacing:.06em;line-height:1.6}
+.solid-button,.outline-button,.journey-primary,.filters button,.project-nav a,.work-shortcuts,.feature-actions .solid-button,.feature-actions .outline-button{font-size:16px;line-height:1.5}
+.solid-button,.outline-button,.journey-primary,.filters button,.lab-bar button,.location-time button,.place-pagination button,.cast-groups button,.guild-filters button{min-height:44px}
+.feature-stage:has(.cinematic-background){min-height:760px}
+.rail-number{display:none}
+.system-explainers .system-copy{grid-template-columns:36px minmax(0,1fr)}
+.system-explainers .system-copy>p{font-size:17px}
+.lab-bar{gap:20px;align-items:center}.lab-bar button{flex-shrink:0}
+.guild-roster{grid-template-columns:repeat(8,minmax(0,1fr));max-height:460px}
+.guild-roster b{font-size:16px}.guild-roster small{font-size:14px}
+.expedition-slot{align-items:flex-start}.expedition-slot b{padding-right:12px}
+.guild-recruit,.expedition-bottom,.expedition-header{flex-wrap:wrap}
+.guild-signature{grid-template-columns:1fr}
+.encounter-allies{grid-template-columns:repeat(2,minmax(0,1fr))}
+.city-status{gap:16px;flex-wrap:wrap;line-height:1.6}
+.place-grid b{font-size:16px}.place-grid small{font-size:14px}
+.location-facts b{font-size:18px}.location-facts span,.location-facts small{font-size:15px}
+.location-caption{max-width:920px}.location-caption h3{line-height:1.4}
+.signature-place b{font-size:16px}.signature-place small,.signature-place em{font-size:14px}
+.site-footer p,.footer-identity .copyright,.footer-links{font-size:14px;line-height:1.8}
+.project-overview h2{font-size:36px;line-height:1.45}
+.project-facts>div{font-size:16px;line-height:1.75}
+.lightbox-close,.lightbox-zoom{font-size:16px}
+@media(max-width:1100px){
+ .guild-roster{grid-template-columns:repeat(6,minmax(0,1fr))}
+ .project-overview{gap:36px}
+}
+@media(max-width:760px){
+ body{font-size:17px}
+ .site-header{height:76px;padding-inline:16px;gap:12px}
+ .brand{font-size:20px;gap:7px;white-space:nowrap}
+ .brand-mark{font-size:29px}
+ .site-header nav{gap:14px;font-size:14px}
+ .motion-toggle{flex:0 0 36px;min-width:36px;min-height:36px}
+ .site-header .motion-toggle-text{display:none}
+ .header-link{display:none}
+ .feature-stage:has(.cinematic-background){min-height:0}
+ .feature-summary,.project-summary{font-size:17px;line-height:1.85}
+ .section-heading,.section-heading.compact{display:block}
+ .section-heading>p{max-width:none;padding-top:16px;font-size:17px;line-height:1.7}
+ .section-heading h2,.section-heading.compact h2{font-size:31px;line-height:1.4}.work-item>p,.prose,.cast-story,.cast-intro,.play-guide li,.credits-block p,.credits-list dd,.about-section p:not(.eyebrow),.journal-item p{font-size:17px;line-height:1.85}
+ .work-meta,.tags span,.journal-date,.journal-project,.journal-project span{font-size:14px}
+ .work-meta{gap:12px;flex-wrap:wrap}
+ .filters{flex-wrap:wrap;gap:8px}.filters button{font-size:15px;padding-inline:12px}
+ .project-nav{top:76px;font-size:16px;padding:15px 20px;gap:24px}
+ .project-nav a{white-space:nowrap}.project-nav a:after{bottom:-15px}
+ .project-page section[id],.project-page aside[id]{scroll-margin-top:152px}
+ .project-page .torba-city .city-status{top:132px}
+ .project-overview h2{font-size:29px;line-height:1.45}
+ .project-facts>div{font-size:16px;grid-template-columns:95px minmax(0,1fr)}
+ .journey-description,.system-explainers .system-copy>p,.guild-profile-copy>p:not([class]),.guild-signature dd,.city-section p,.city-note,.location-caption>p:last-child,.location-route p{font-size:17px;line-height:1.8}
+ .system-explainers{grid-template-columns:1fr}.system-explainers .system-copy{grid-template-columns:28px minmax(0,1fr);gap:8px 12px}
+ .work-experience .lab-bar{padding:18px;align-items:flex-start;flex-wrap:wrap;gap:8px}.lab-bar>span{font-size:14px}.work-experience .lab-footnote{padding:20px;font-size:15px}
+ .guild-roster{grid-template-columns:repeat(3,minmax(0,1fr));max-height:440px}
+ .expedition-slots,.encounter-allies{grid-template-columns:1fr}
+ .guild-profile-copy h4{font-size:31px}.guild-profile-copy p{font-size:17px}
+ .guild-recruit{align-items:stretch}.guild-recruit>span{font-size:15px}
+ .guild-recruit .journey-primary{width:100%}
+ .expedition-header h4 small{display:block;margin:8px 0 0}
+ .city-status{position:relative!important;top:auto!important;gap:12px;font-size:15px}
+ .city-note{font-size:16px!important}
+ .location-facts>div{padding:20px 22px}.location-time button{font-size:15px}
+ .place-statline>span{font-size:14px;gap:10px}.place-statline{gap:18px 24px}
+ .place-directory summary{flex-wrap:wrap}.place-directory summary>span:last-child{font-size:14px}
+ .place-grid b{font-size:16px}.place-grid small{font-size:14px}
+ .location-count{font-size:14px;left:16px;top:75px}
+ .site-footer{gap:24px}.site-footer>p,.footer-identity .copyright,.footer-links{font-size:14px}
+ .footer-links{margin-left:0}
+}
+@media(max-width:370px){.brand{font-size:18px}.site-header{gap:9px;padding-inline:12px}.site-header nav{gap:10px;font-size:14px}}
