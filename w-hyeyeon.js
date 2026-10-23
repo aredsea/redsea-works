@@ -68,20 +68,14 @@
   <section class="hy-half" id="top" aria-label="${esc(title)} — 유혜연의 첫 장">
     <div class="hy-frost" aria-hidden="true"></div>
     <div class="hy-glints" aria-hidden="true"><i></i><i></i><i></i></div>
-    <svg class="hy-crack" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path pathLength="100" d="M503 170 L497 248 L512 301 L489 352 L506 404 L492 455 L509 503 L494 548 L511 597 L498 651 L515 712 L501 790 L509 860"/>
-      <path pathLength="100" d="M512 301 L571 322 L612 309 L668 334"/>
-      <path pathLength="100" d="M489 352 L441 371 L402 360 L351 389 L318 381"/>
-      <path pathLength="100" d="M509 503 L560 529 L589 571 L640 590"/>
-      <path pathLength="100" d="M494 548 L452 583 L430 630"/>
-      <path pathLength="100" d="M506 404 L538 418"/>
-    </svg>
+    <img class="hy-shatter" src="${asset('identity/hyeyeon-ice-fracture.webp')}" alt="" width="1536" height="1024" aria-hidden="true">
     <p class="hy-half-top">redsea works · 04</p>
     <h1 class="hy-title" aria-label="${esc(title)}">${[...title].map((ch, i) => `<span class="hy-syl" aria-hidden="true" style="--side:${i ? 1 : -1}">${esc(ch)}</span>`).join('')}</h1>
     <p class="hy-first">${esc(first)}</p>
     <a class="hy-down" href="#ice">첫 장 읽기</a>
     <p class="hy-half-foot">유혜연 · 첫 메시지 ${text.length + 1}문단 · ${esc(p.version)}</p>
   </section>
+  <div class="hy-hold" aria-hidden="true"></div>
 
   <article class="hy-chapter" id="ice" aria-labelledby="ice-h">
     <aside class="hy-margin" aria-hidden="true">${glass}<p class="hy-glass-note" data-glass-note>삼십 분째</p></aside>
@@ -141,7 +135,11 @@
   let coverTick = false;
   function cover() {
     coverTick = false;
-    const t = Math.min(1, Math.max(0, scrollY / Math.max(1, half.offsetHeight)));
+    // First the ice gives way while the cover holds still, then the chapter slides over it.
+    const hold = main.querySelector('.hy-hold').offsetHeight;
+    const crack = Math.min(1, Math.max(0, scrollY / Math.max(1, hold)));
+    const t = Math.min(1, Math.max(0, (scrollY - hold) / Math.max(1, half.offsetHeight)));
+    half.style.setProperty('--c', stillCover.matches ? '1' : crack.toFixed(4));
     half.style.setProperty('--p', stillCover.matches ? '0' : t.toFixed(4));
   }
   addEventListener('scroll', () => { if (!coverTick) { coverTick = true; requestAnimationFrame(cover); } }, { passive: true });

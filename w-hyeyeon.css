@@ -46,25 +46,33 @@ p, li { text-wrap: pretty; }
 .hy-half::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .55; background-image: radial-gradient(circle at 20% 30%, rgb(255 255 255 / .9) 0 1px, transparent 1.5px), radial-gradient(circle at 70% 60%, rgb(169 198 220 / .5) 0 1px, transparent 1.5px); background-size: 37px 41px, 53px 47px; -webkit-mask-image: radial-gradient(60% 50% at 50% 45%, transparent 30%, #000 80%); mask-image: radial-gradient(60% 50% at 50% 45%, transparent 30%, #000 80%); }
 .hy-half-top { align-self: start; margin: 0; font: italic 400 17px/1 var(--latin); letter-spacing: .08em; color: var(--mute); }
 .hy-title { position: relative; z-index: 2; margin: 0; display: flex; gap: .18em; font: 400 clamp(120px, 20vw, 260px)/1 var(--book); color: #3a5068; }
-.hy-syl { display: inline-block; color: transparent; background: linear-gradient(135deg, #9fbdd2 10%, #e3eef5 36%, #4b6a85 58%, #2d3f52 82%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 14px 40px rgb(116 156 183 / .28)); transform: translate(calc(var(--side) * var(--p, 0) * 9vw), calc(var(--side) * var(--p, 0) * -2.4vw)) rotate(calc(var(--side) * var(--p, 0) * 4deg)); animation: hy-settle 2.4s cubic-bezier(.2, .7, .1, 1) both; }
-.hy-half.is-cold .hy-syl { animation: hy-settle 2.4s cubic-bezier(.2, .7, .1, 1) both, hy-snap .38s steps(2, jump-none) 2.25s both; }
+.hy-syl { display: inline-block; color: transparent; background: linear-gradient(135deg, #9fbdd2 10%, #e3eef5 36%, #4b6a85 58%, #2d3f52 82%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 14px 40px rgb(116 156 183 / .28)); transform: translate(calc(var(--side) * var(--c, 0) * 3.2vw), calc(var(--side) * var(--c, 0) * -.9vw)) rotate(calc(var(--side) * var(--c, 0) * 2.2deg)); animation: hy-settle 2.4s cubic-bezier(.2, .7, .1, 1) both; }
+.hy-half.is-cold .hy-syl { animation: hy-settle 2.4s cubic-bezier(.2, .7, .1, 1) both, hy-snap .3s steps(2, jump-none) 1.9s both; }
 @keyframes hy-settle { from { opacity: 0; filter: blur(8px); } to { opacity: 1; } }
 @keyframes hy-snap { 0% { translate: 0 0; } 40% { translate: calc(var(--side) * -3px) 1px; } 100% { translate: 0 0; } }
 
-/* the crack runs down between the two syllables, then opens as the page moves */
-.hy-crack { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
-.hy-crack path { fill: none; stroke: #fff; stroke-width: calc(1.6px + var(--p, 0) * 3px); stroke-linejoin: bevel; stroke-dasharray: 100; stroke-dashoffset: 100; filter: drop-shadow(1px 1px 0 rgb(79 111 143 / .55)) drop-shadow(0 0 6px rgb(160 200 230 / .8)); }
-.hy-half.is-cold .hy-crack path { animation: hy-crack .55s cubic-bezier(.6, 0, .9, .6) 2.2s forwards; }
-.hy-half.is-cold .hy-crack path:nth-child(n+2) { animation-delay: 2.5s; animation-duration: .4s; }
-@keyframes hy-crack { to { stroke-dashoffset: 0; } }
+/* the words stay above the fracture */
+.hy-half-top, .hy-first, .hy-down, .hy-half-foot { position: relative; z-index: 2; }
+
+/* a real fracture, revealed outward from the centre as the reader scrolls */
+.hy-shatter { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; pointer-events: none; mix-blend-mode: multiply;
+  opacity: calc(.55 + var(--c, 0) * .45);
+  -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 calc(4% + var(--c, 0) * 78%), transparent calc(10% + var(--c, 0) * 86%));
+          mask-image: radial-gradient(circle at 50% 48%, #000 calc(4% + var(--c, 0) * 78%), transparent calc(10% + var(--c, 0) * 86%));
+  filter: contrast(calc(1 + var(--c, 0) * .35));
+  transform: scale(calc(1.02 - var(--c, 0) * .02)); }
+.hy-half:not(.is-cold) .hy-shatter { opacity: 0; }
+.hy-half.is-cold .hy-shatter { animation: hy-first-crack .45s cubic-bezier(.2, .9, .3, 1) 1.9s backwards; }
+@keyframes hy-first-crack { from { opacity: 0; } }
+.hy-hold { height: 75svh; }
 
 /* frost creeps in from the edges, and thickens as the cover is left behind */
-.hy-frost { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: calc(.75 + var(--p, 0) * .25);
+.hy-frost { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: calc(.7 + var(--c, 0) * .3);
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .78 0 0 0 0 .86 0 0 0 0 .93 0 0 0 2.2 -.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='.012 .05' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .64 0 0 0 0 .76 0 0 0 2.4 -.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  -webkit-mask-image: radial-gradient(ellipse calc(78% - var(--p, 0) * 30%) calc(70% - var(--p, 0) * 26%) at 50% 46%, transparent 52%, #000 100%);
-          mask-image: radial-gradient(ellipse calc(78% - var(--p, 0) * 30%) calc(70% - var(--p, 0) * 26%) at 50% 46%, transparent 52%, #000 100%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='f'%3E%3CfeTurbulence stitchTiles='stitch' type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .78 0 0 0 0 .86 0 0 0 0 .93 0 0 0 2.2 -.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence stitchTiles='stitch' type='turbulence' baseFrequency='.012 .05' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .68 0 0 0 0 .8 0 0 0 1.9 -.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  -webkit-mask-image: radial-gradient(ellipse calc(78% - var(--c, 0) * 26%) calc(70% - var(--c, 0) * 22%) at 50% 46%, transparent 52%, #000 100%);
+          mask-image: radial-gradient(ellipse calc(78% - var(--c, 0) * 26%) calc(70% - var(--c, 0) * 22%) at 50% 46%, transparent 52%, #000 100%);
   animation: hy-frost 3.2s ease-out .3s both; }
 @keyframes hy-frost { from { opacity: 0; transform: scale(1.06); } }
 
@@ -78,7 +86,7 @@ p, li { text-wrap: pretty; }
 /* the chapter slides up over the pinned cover */
 .hy-slide { position: relative; }
 .hy-slide > .hy-half { position: sticky; top: 0; height: 100svh; min-height: 560px; transform: scale(calc(1 - var(--p, 0) * .06)); transform-origin: 50% 30%; }
-.hy-slide > .hy-half > :not(.hy-frost):not(.hy-glints):not(.hy-crack) { opacity: calc(1 - var(--p, 0) * .55); }
+.hy-slide > .hy-half > :not(.hy-frost):not(.hy-glints):not(.hy-shatter) { opacity: calc(1 - var(--p, 0) * .55); }
 .hy-slide > .hy-chapter { position: relative; z-index: 3; border-radius: 22px 22px 0 0; box-shadow: 0 -30px 60px -30px rgb(29 39 51 / .35); border-top: 0; }
 .hy-first { margin: 26px 0 0; font: 400 clamp(19px, 1.6vw, 23px)/1.7 var(--book); color: var(--ink); animation: hy-fade 1.6s ease-out .9s both; }
 @keyframes hy-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -243,7 +251,7 @@ p, li { text-wrap: pretty; }
   .hy-toc b { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hy-crack path { stroke-dashoffset: 0; }
+  .hy-hold { height: 0; }
   .hy-glints i { animation: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
 }
