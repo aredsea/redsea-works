@@ -15,7 +15,21 @@
   const first = text.shift() || '';
   const said = t => /^[“"]/.test(t);
   // A section break falls where the scene turns: before the first spoken line after a long silence.
-  const body = text.map((t, i) => `<p class="${said(t) ? 'hy-said' : ''}${i === Math.floor(text.length * .5) ? ' hy-turn' : ''}">${esc(t)}</p>`).join('');
+  // The lines that carry the scene. Matched by their words, so an edit to the text cannot shift them.
+  const MOMENT = [
+    ['오늘 만나자고 한 건 나였다.', 'rise'], ['그런데 얼굴을 보자 전부 남의 말 같았다.', 'drift'],
+    ['무슨 일이 있었던 건 아니었다.', 'rise'], ['“우리 그만하자.”', 'big'], ['막상 뱉고 나니 평범한 목소리였다.', 'drift'],
+    ['처음으로 네 얼굴을 제대로 봤다.', 'rise'], ['“네 얘기까지 듣고 나면, 또 없던 일로 하고 싶어질까 봐.”', 'drift'],
+    ['“너는…… 나랑 아직 만나고 싶어?”', 'big']
+  ];
+  const kindOf = t => (MOMENT.find(([m]) => m === t) || [])[1];
+  const words = t => t.split(' ').map((w, i) => `<span style="--i:${i}">${esc(w)}</span>`).join(' ');
+  const body = text.map((t, i) => {
+    const k = kindOf(t), cls = [said(t) ? 'hy-said' : '', i === Math.floor(text.length * .5) ? 'hy-turn' : '', k ? 'hy-' + k : ''].filter(Boolean).join(' ');
+    if (k === 'rise' || k === 'big') return `<p class="${cls}" data-moment>${words(t)}</p>`;
+    if (k === 'drift') return `<p class="${cls}" data-moment>${esc(t)}<span class="hy-echo" aria-hidden="true">${esc(t)}</span></p>`;
+    return `<p class="${cls}">${esc(t)}</p>`;
+  }).join('');
 
   const AXES = [['존중', '상대를 동등한 사람으로 대하는 태도.'], ['이해', '상대의 상황과 마음을 알아보는 반응.'], ['유능함', '일을 판단하고 해내는 모습.'], ['호의', '자신에게 향하는 관심과 친절.'], ['매력', '끌림을 느끼게 하는 인상.']];
   // Example moments only: they show which way the rule moves, not what the engine scores.
@@ -68,7 +82,7 @@
   <section class="hy-half" id="top" aria-label="${esc(title)} — 유혜연의 첫 장">
     <div class="hy-frost" aria-hidden="true"></div>
     <div class="hy-glints" aria-hidden="true"><i></i><i></i><i></i></div>
-    <img class="hy-shatter" src="${asset('identity/hyeyeon-ice-fracture.webp')}" alt="" width="1536" height="1024" aria-hidden="true">
+    <img class="hy-shatter" src="${asset('identity/hyeyeon-ice-seam.webp')}" alt="" width="1484" height="1024" aria-hidden="true">
     <p class="hy-half-top">redsea works · 04</p>
     <h1 class="hy-title" aria-label="${esc(title)}">${[...title].map((ch, i) => `<span class="hy-syl" aria-hidden="true" style="--side:${i ? 1 : -1}">${esc(ch)}</span>`).join('')}</h1>
     <p class="hy-first">${esc(first)}</p>
@@ -145,6 +159,25 @@
   addEventListener('scroll', () => { if (!coverTick) { coverTick = true; requestAnimationFrame(cover); } }, { passive: true });
   cover();
   requestAnimationFrame(() => half.classList.add('is-cold'));
+
+  /* ---------- lines that carry the scene ---------- */
+  const moments = [...main.querySelectorAll('[data-moment]')];
+  const settle = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); settle.unobserve(e.target); } }), { threshold: .6, rootMargin: '0px 0px -12% 0px' });
+  moments.forEach(m => settle.observe(m));
+  let momentTick = false;
+  function drift() {
+    momentTick = false;
+    if (stillCover.matches) return;
+    const vh = innerHeight;
+    moments.forEach(m => {
+      const r = m.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      const v = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - vh / 2) / vh));   // -1 above, 0 centred, 1 below
+      m.style.setProperty('--v', v.toFixed(3));
+    });
+  }
+  addEventListener('scroll', () => { if (!momentTick) { momentTick = true; requestAnimationFrame(drift); } }, { passive: true });
+  drift();
 
   /* ---------- the relationship diagram ---------- */
   const lab = main.querySelector('.hy-bond');
