@@ -82,7 +82,7 @@
   <section class="hy-half" id="top" aria-label="${esc(title)} — 유혜연의 첫 장">
     <div class="hy-frost" aria-hidden="true"></div>
     <div class="hy-glints" aria-hidden="true"><i></i><i></i><i></i></div>
-    <img class="hy-shatter" src="${asset('identity/hyeyeon-ice-seam.webp')}" alt="" width="1484" height="1024" aria-hidden="true">
+    <img class="hy-shatter" src="${asset('identity/hyeyeon-ice-crack.webp')}" alt="" width="1536" height="1024" aria-hidden="true">
     <p class="hy-half-top">redsea works · 04</p>
     <h1 class="hy-title" aria-label="${esc(title)}">${[...title].map((ch, i) => `<span class="hy-syl" aria-hidden="true" style="--side:${i ? 1 : -1}">${esc(ch)}</span>`).join('')}</h1>
     <p class="hy-first">${esc(first)}</p>
