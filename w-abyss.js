@@ -276,4 +276,52 @@
   const top = main.querySelector('.ab-top');
   new IntersectionObserver(([e]) => top.classList.toggle('is-solid', !e.isIntersecting), { rootMargin: '-80px 0px 0px 0px' }).observe(main.querySelector('.ab-hero-copy'));
   if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
+
+  /* ---------- the way in: the gate over the abyss ---------- */
+  const door = side => `<div class="g-half g-${side}"><div class="g-frame"><img src="${asset('identity/abyss-gate.webp')}" alt="" width="1536" height="1024" fetchpriority="high"></div></div>`;
+  const embers = Array.from({ length: 14 }, (_, i) => `<i style="--x:${[18, 22, 25, 20, 77, 80, 74, 78, 30, 70, 46, 54, 14, 86][i]}%;--d:${(i * 1.37) % 7}s;--t:${6 + (i % 4) * 1.4}s;--dx:${(i % 2 ? 1 : -1) * (12 + i * 3)}px"></i>`).join('');
+  window.RedseaIntro?.gate({
+    world: 'abyss',
+    label: 'Into the Abyss 입장',
+    switchIn: '.ab-back',
+    scene: `<i class="g-void" aria-hidden="true"></i>
+      <div class="g-scene">${door('l')}${door('r')}<i class="g-seam"></i><span class="g-embers" aria-hidden="true">${embers}</span></div>
+      <div class="g-copy">
+        <p class="g-time">연합 길드 토르바 · 원정 허가 제0417호</p>
+        <p class="g-title">문을 열면,<br>돌아올 때까지 닫히지 않는다.</p>
+        <p class="g-sub">Into the Abyss · 심연 아래로 내려가 살아 돌아오는 던전 RPG</p>
+        <div class="g-act"><button type="button" data-gate="sound">${RedseaIntro.icon}<span>문을 연다</span></button><button type="button" data-gate="quiet">소리 없이 입장</button></div>
+        <p class="g-note">횃불과 심연의 소리가 함께 나옵니다. 배경음은 오른쪽 위 버튼으로 언제든 끌 수 있습니다.</p>
+      </div>`,
+    enter(g, k) {
+      if (k) {
+        for (let i = 0; i < 6; i++) {
+          k.tone({ type: 'square', freq: 2100 + Math.random() * 1400, at: i * .05, dur: .09, vol: .035, cut: 5200 });
+          k.hiss({ at: i * .05, from: 4200, dur: .06, vol: .05, q: 2 });
+        }
+        k.tone({ at: .12, freq: 120, to: 55, dur: .34, vol: .45 });
+        k.hiss({ at: .12, type: 'lowpass', from: 600, dur: .12, vol: .3 });
+        k.hiss({ at: .45, type: 'lowpass', from: 90, to: 170, dur: 2.3, attack: 1, vol: .26, q: .5 });
+        k.hiss({ at: .55, from: 320, to: 170, dur: 1.5, attack: .4, vol: .09, q: 3 });
+        k.tone({ at: 1.25, freq: 55, dur: 3.6, vol: .26, attack: .02 });
+        k.tone({ at: 1.25, freq: 82.6, dur: 3, vol: .13, attack: .02 });
+        k.tone({ at: 1.25, type: 'triangle', freq: 131.6, dur: 2.6, vol: .08, cut: 600 });
+        k.hiss({ at: 1.25, type: 'lowpass', from: 220, dur: .7, vol: .2 });
+        k.hiss({ at: 1.35, from: 300, to: 2400, dur: 1.1, attack: .7, vol: .09 });
+      }
+      return 2450;
+    },
+    bed(k) {
+      const c = k.ctx, t = c.currentTime, lp = c.createBiquadFilter(), g = c.createGain(), lfo = c.createOscillator(), depth = c.createGain();
+      lp.type = 'lowpass'; lp.frequency.value = 190; lp.Q.value = 2;
+      lfo.frequency.value = .05; depth.gain.value = 70; lfo.connect(depth); depth.connect(lp.frequency);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.032, t + 4);
+      const oscs = [[55, 'sawtooth'], [55.35, 'sawtooth'], [82.4, 'sawtooth'], [41.2, 'sine']].map(([f, type]) => { const o = c.createOscillator(); o.type = type; o.frequency.value = f; o.connect(lp); o.start(); return o; });
+      lp.connect(g); g.connect(k.out); lfo.start();
+      const wind = k.wash({ type: 'lowpass', freq: 420, q: .3, vol: .025 });
+      const cave = k.echo(.41, .46, .5);
+      const stopDrips = k.every(2600, () => { if (Math.random() < .55) { const f = 900 + Math.random() * 900; k.tone({ freq: f, to: f * .6, dur: .18, vol: .06, attack: .003, dest: cave }); } });
+      return () => { stopDrips(); wind.stop(); oscs.forEach(o => o.stop()); lfo.stop(); };
+    }
+  });
 })();

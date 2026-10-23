@@ -276,6 +276,43 @@ p, li { text-wrap: pretty; }
 .ab-next:hover b { color: var(--gold-2); }
 
 /* ---- narrow ------------------------------------------------------------------- */
+/* ---- the way in -------------------------------------------------------------- */
+.gate-abyss { --gate-bg: #050608; color: var(--text); font-family: var(--sans); }
+.gate-abyss::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(0deg, rgb(5 6 8 / .95) 0, rgb(5 6 8 / .62) 30%, rgb(5 6 8 / 0) 56%); transition: opacity .3s ease-out; }
+.gate-abyss.is-open::after { opacity: 0; }
+.gate-abyss .g-frame > img { object-fit: cover; }
+.gate-abyss .g-scene { perspective: 1500px; }
+/* behind the doors there is only the abyss's own light */
+.gate-abyss .g-void { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 34% 52% at 50% 46%, rgb(196 178 255 / .95), rgb(138 107 255 / .7) 30%, rgb(46 30 110 / .9) 62%, #050608 92%); opacity: 0; }
+.gate-abyss.is-open .g-void { animation: g-void 2.4s ease-out both; }
+@keyframes g-void { 25% { opacity: 0; } 45% { opacity: 1; } 72% { opacity: 1; } to { opacity: 0; } }
+.gate-abyss .g-half { transition: transform 1.2s cubic-bezier(.6, 0, .2, 1) .62s, filter 1.2s ease-out .62s; }
+.gate-abyss .g-l { transform-origin: 0 50%; }
+.gate-abyss .g-r { transform-origin: 100% 50%; }
+.gate-abyss.is-open .g-l { transform: rotateY(74deg); filter: brightness(.3); }
+.gate-abyss.is-open .g-r { transform: rotateY(-74deg); filter: brightness(.3); }
+.gate-abyss .g-seam { position: absolute; inset: 0 auto 0 50%; z-index: 2; width: 2px; transform: translateX(-50%); background: linear-gradient(180deg, rgb(138 107 255 / 0) 8%, #c9b8ff 30%, #f4efff 52%, #c9b8ff 74%, rgb(138 107 255 / 0) 96%); box-shadow: 0 0 18px 4px rgb(138 107 255 / .55); animation: g-seam 3.4s ease-in-out infinite alternate; }
+@keyframes g-seam { from { opacity: .45; } to { opacity: 1; } }
+.gate-abyss.is-open .g-seam { animation: g-crack .7s ease-in-out both; }
+@keyframes g-crack { 60% { opacity: 1; transform: translateX(-50%) scaleX(6); } to { opacity: 0; transform: translateX(-50%) scaleX(30); } }
+.gate-abyss.is-open .g-scene { animation: g-shudder .52s linear .08s; transform: scale(1.32); opacity: 0; transition: transform 1.5s cubic-bezier(.5, 0, .2, 1) .85s, opacity .6s ease-out 1.75s; }
+@keyframes g-shudder { 10%, 50%, 90% { transform: translate(-2px, 1px); } 30%, 70% { transform: translate(2px, -1px); } }
+.gate-abyss .g-embers i { position: absolute; bottom: 18%; left: var(--x); width: 3px; height: 3px; border-radius: 50%; background: #ffc56b; box-shadow: 0 0 6px 2px rgb(255 140 50 / .7); opacity: 0; animation: g-ember var(--t) ease-out var(--d) infinite; }
+@keyframes g-ember { 10% { opacity: 1; } to { opacity: 0; transform: translate(var(--dx), -62svh); } }
+.gate-abyss.is-open { opacity: 0; transition: opacity .45s ease-out 1.95s; }
+.gate-abyss .g-time { font: 600 12px/1.4 var(--cinzel); letter-spacing: .2em; color: var(--gold); }
+.gate-abyss .g-copy { max-width: 900px; }
+.gate-abyss .g-title { font: 900 clamp(26px, 3.7vw, 50px)/1.25 var(--serif); color: #f0e8d6; text-shadow: 0 2px 30px #000; }
+.gate-abyss .g-sub { font-size: 15px; color: var(--mute); }
+.gate-abyss [data-gate] { font-family: var(--serif); font-weight: 700; font-size: 15px; }
+.gate-abyss [data-gate="sound"] { padding: 0 30px; border: 0; color: #1a1408; background: linear-gradient(180deg, #ecd08f, #b8913f); clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%); }
+.gate-abyss [data-gate="sound"]:hover { background: linear-gradient(180deg, #f6dea6, #c9a24a); }
+.gate-abyss [data-gate="quiet"] { border: 1px solid var(--line); background: rgb(11 13 16 / .6); color: var(--text); }
+.gate-abyss [data-gate="quiet"]:hover { border-color: var(--gold); color: var(--gold-2); }
+.ab-top .snd { color: var(--gold-2); }
+@media (max-width: 380px) { .ab-crest { font-size: 12px; letter-spacing: .08em; } }
+@media (max-width: 760px) { .ab-top { gap: 10px; } .ab-crest { gap: 8px; white-space: nowrap; } .ab-crest svg { width: 26px; height: 26px; } .ab-back { padding: 0 10px; white-space: nowrap; } }
+
 @media (max-width: 1180px) {
   .ab-depth-rail { display: none; }
   .ab-nav { display: none; }

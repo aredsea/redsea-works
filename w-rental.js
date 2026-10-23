@@ -288,4 +288,54 @@
   const top = main.querySelector('.rn-top');
   new IntersectionObserver(([e]) => top.classList.toggle('is-solid', !e.isIntersecting), { rootMargin: '-80px 0px 0px 0px' }).observe(main.querySelector('.rn-hero-copy'));
   if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
+
+  /* ---------- the way in: a nomination, a stamp, the noren ---------- */
+  const NIGHT = [[110, 196, 261.63, 329.63, 493.88], [87.31, 174.61, 261.63, 329.63, 440], [73.42, 174.61, 220, 261.63, 329.63], [82.41, 220, 246.94, 293.66, 392]];
+  const noren = (side, mark) => `<div class="g-half g-${side}"><div class="g-frame"><img src="${asset('identity/rental-gate.webp')}" alt="" width="1536" height="1024" fetchpriority="high"><b class="g-kanji">${mark}</b></div></div>`;
+  window.RedseaIntro?.gate({
+    world: 'rental',
+    label: '렌탈남녀 입장',
+    switchIn: '.rn-back',
+    scene: `<svg class="g-defs" width="0" height="0" aria-hidden="true" focusable="false"><filter id="g-rough"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></svg>
+      <div class="g-scene">${noren('l', '宵')}${noren('r', '待')}<i class="g-glow"></i><i class="g-rain"></i>
+        <p class="g-neon" aria-hidden="true"><span>宵</span><span>待</span><span>ち</span></p></div>
+      <div class="g-copy">
+        <p class="g-time">新宿 · 23:40 · 지명 1건</p>
+        <p class="g-title">오늘 밤,<br>지명이 들어왔습니다.</p>
+        <p class="g-sub">렌탈남녀 · 요이마치 렌탈 사무소</p>
+        <div class="g-act"><button type="button" data-gate="sound">${RedseaIntro.icon}<span>도장 찍고 입장</span></button><button type="button" data-gate="quiet">소리 없이 입장</button></div>
+        <p class="g-note">빗소리와 배경음이 함께 나옵니다. 배경음은 오른쪽 위 버튼으로 언제든 끌 수 있습니다.</p>
+      </div>
+      <span class="g-stamp" aria-hidden="true">承諾</span>`,
+    enter(g, k) {
+      if (k) {
+        k.tone({ freq: 150, to: 44, dur: .28, vol: .6 });
+        k.tone({ type: 'triangle', freq: 92, dur: .12, vol: .22 });
+        k.hiss({ type: 'lowpass', from: 900, dur: .09, vol: .35 });
+        k.hiss({ at: .5, from: 500, to: 3200, dur: .75, vol: .12, q: .8 });
+        k.hiss({ at: .58, from: 700, to: 2600, dur: .6, vol: .07, q: .8 });
+        const bell = k.echo(.27, .32, .4);
+        k.tone({ at: .7, freq: 1318.5, dur: 1.4, vol: .07, dest: bell });
+        k.tone({ at: .7, freq: 1318.5, dur: 1.4, vol: .05 });
+        k.tone({ at: .86, freq: 1760, dur: 1.6, vol: .05, dest: bell });
+        k.tone({ at: .86, freq: 1760, dur: 1.6, vol: .04 });
+      }
+      return 1500;
+    },
+    bed(k) {
+      const rain = k.wash({ freq: 2400, q: .4, vol: .045 });
+      const street = k.wash({ type: 'lowpass', freq: 320, q: .3, vol: .02 });
+      let bar = 0;
+      const chord = () => {
+        NIGHT[bar++ % NIGHT.length].forEach((f, i) => {
+          k.tone({ type: 'triangle', freq: f, dur: 4.6, vol: i ? .03 : .045, attack: .5, cut: 900 });
+          if (i > 1) k.tone({ freq: f * 2, at: .04 * i, dur: 1.6, vol: .012, attack: .005 });
+        });
+      };
+      chord();
+      const stopChords = k.every(4800, chord);
+      const stopCars = k.every(17000, () => k.hiss({ type: 'lowpass', from: 380, to: 1500, dur: 3.2, attack: 1.6, vol: .03 }));
+      return () => { stopChords(); stopCars(); rain.stop(); street.stop(); };
+    }
+  });
 })();

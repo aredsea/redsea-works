@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/* redsea works — what every entrance gate shares. Each world styles its own scene in w-*.css. */
+
+html.is-gated, html.is-gated body { overflow: hidden; }
+
+/* The gate is opaque from the first frame so the page never flashes through; it turns
+   transparent the moment it opens, so the page itself is what the opening reveals. */
+.gate { position: fixed; inset: 0; z-index: 1000; overflow: hidden; isolation: isolate; display: grid; align-content: end; justify-items: center; padding: 0 16px max(7svh, calc(env(safe-area-inset-bottom) + 28px)); background: var(--gate-bg, #000); }
+.gate.is-open { background: transparent; pointer-events: none; }
+.g-scene { position: absolute; inset: 0; z-index: 1; animation: g-in .9s ease-out backwards; }
+.g-copy { animation: g-in .9s ease-out .25s backwards; }
+@keyframes g-in { from { opacity: 0; } }
+.gate.is-open .g-copy { opacity: 0; transform: translateY(12px); transition: opacity .25s ease-out, transform .25s ease-out; }
+
+/* The scene is drawn twice and each copy keeps one half, so the halves can part.
+   The frame repeats object-fit: cover by hand, so marks placed on the art stay on it at any size. */
+.g-half { position: absolute; inset: 0; overflow: hidden; }
+.g-half.g-l { clip-path: inset(0 50% 0 0); }
+.g-half.g-r { clip-path: inset(0 0 0 50%); }
+.g-frame { position: absolute; left: 50%; top: 50%; width: max(100vw, 150svh); height: max(100svh, 66.667vw); transform: translate(-50%, -50%); }
+.g-frame > img { display: block; width: 100%; height: 100%; }
+
+.g-copy { position: relative; z-index: 4; display: grid; justify-items: center; gap: 14px; max-width: 640px; text-align: center; }
+.g-title, .g-sub, .g-note { text-wrap: balance; }
+.g-title { margin: 0; }
+.g-time, .g-sub, .g-note { margin: 0; }
+.g-act { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 6px; }
+.gate [data-gate] { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 0 24px; font: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: transform .16s ease-out, background-color .2s ease-out, border-color .2s ease-out, color .2s ease-out; }
+.gate [data-gate]:active { transform: scale(.96); }
+.gate [data-gate]:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.gate [data-gate] svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.g-note { font-size: 12px; opacity: .72; }
+@media (max-height: 520px) and (orientation: landscape) {
+  .gate { padding-bottom: 18px; }
+  .g-copy { gap: 8px; }
+  .g-sub, .g-note { display: none; }
+}
+
+/* the header switch */
+.snd { flex: none; display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; opacity: .78; touch-action: manipulation; transition: opacity .2s ease-out; }
+.snd:hover, .snd[aria-pressed="true"] { opacity: 1; }
+.snd:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+@media (max-width: 760px) { .snd { width: 36px; height: 36px; } }
+.snd svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* reduced motion: the gate simply fades */
+.gate.is-quick { opacity: 0; transition: opacity .4s ease-out; }
+.gate.is-quick, .gate.is-quick * { animation: none !important; }
+.gate.is-quick * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .gate *, .gate *::before, .gate *::after { animation: none !important; }
+}

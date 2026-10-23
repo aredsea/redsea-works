@@ -153,12 +153,12 @@
   function flash(i, cls) { const g = nodes()[i]; if (!g) return; g.classList.remove(cls); void g.getBBox; g.classList.add(cls); }
 
   function listen() {
-    clear(); s.phase = 'listen'; s.marks = []; paint();
+    clear(); s.phase = 'listen'; s.marks = []; paint(); window.RedseaIntro?.hush(true);
     NOTES.forEach((n, i) => later(() => { tone(n); nodes().forEach((g, k) => g.classList.toggle('is-sounding', k === i)); }, i * BEAT * 1000 + 250));
-    later(() => { s.phase = 'heard'; paint('[data-go="play"]'); }, NOTES.length * BEAT * 1000 + 600);
+    later(() => { s.phase = 'heard'; paint('[data-go="play"]'); window.RedseaIntro?.hush(false); }, NOTES.length * BEAT * 1000 + 600);
   }
   function play() {
-    clear(); s.phase = 'count'; s.marks = Array(NOTES.length).fill(null); paint('[data-pad="4"]');
+    clear(); s.phase = 'count'; s.marks = Array(NOTES.length).fill(null); paint('[data-pad="4"]'); window.RedseaIntro?.hush(true);
     const now = performance.now();
     for (let k = 0; k < 4; k++) { later(() => tick(0), k * BEAT * 1000); }
     s.t0 = now + 4 * BEAT * 1000;
@@ -200,7 +200,7 @@
     s.marks = s.marks.map(m => m || '놓침');
     const hits = s.marks.filter(m => m !== '놓침').length;
     if (hits > best) { best = hits; try { localStorage.setItem('redsea-practice-best-8', String(best)); } catch { } }
-    s.phase = 'done'; paint('[data-go="play"]');
+    s.phase = 'done'; paint('[data-go="play"]'); window.RedseaIntro?.hush(false);
     nodes().forEach((g, i) => { g.querySelector('.mu-mark').textContent = s.marks[i]; g.classList.add(s.marks[i] === '놓침' ? 'is-miss' : 'is-hit'); });
   }
   host.addEventListener('click', e => {
@@ -216,7 +216,7 @@
     if (s.phase !== 'play' && s.phase !== 'count') return;
     e.preventDefault(); hit(PADS[Number(e.key) - 1]);
   });
-  document.addEventListener('visibilitychange', () => { if (document.hidden && ['listen', 'count', 'play'].includes(s.phase)) { clear(); s.phase = 'ready'; paint(); } });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && ['listen', 'count', 'play'].includes(s.phase)) { clear(); s.phase = 'ready'; paint(); window.RedseaIntro?.hush(false); } });
   addEventListener('pagehide', () => { clear(); audio?.close().catch(() => { }); });
 
   /* ---------- petals only fall while the cover is on screen ---------- */
@@ -225,4 +225,45 @@
   const top = main.querySelector('.mu-top');
   new IntersectionObserver(([e]) => top.classList.toggle('is-solid', !e.isIntersecting), { rootMargin: '-80px 0px 0px 0px' }).observe(main.querySelector('.mu-cover-pre'));
   if (location.hash) requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
+
+  /* ---------- the way in: house lights down, curtain up ---------- */
+  const hz = n => 261.63 * 2 ** (n / 12);
+  const key = (k, n, at, vol = .07) => { k.tone({ type: 'triangle', freq: hz(n), at, dur: 1.5, vol, cut: 2600 }); k.tone({ freq: hz(n + 12), at, dur: .7, vol: vol * .25 }); };
+  const flutter = Array.from({ length: 9 }, (_, i) => `<img class="g-petal" src="${asset('identity/music-petal.svg')}" alt="" style="--x:${6 + i * 11}%;--d:${(i * 1.9) % 8}s;--s:${.7 + (i % 3) * .3}">`).join('');
+  window.RedseaIntro?.gate({
+    world: 'music',
+    label: '벚꽃이 지는 소리를 너와 들었다 입장',
+    switchIn: '.mu-back',
+    scene: `<div class="g-scene"><div class="g-sheet"><img src="${asset('identity/music-gate.webp')}" alt="" width="1536" height="1024" fetchpriority="high"></div><i class="g-spot"></i><span class="g-petals" aria-hidden="true">${flutter}</span></div>
+      <i class="g-dim" aria-hidden="true"></i>
+      <div class="g-copy">
+        <p class="g-time">히비키가오카 음악학원 · 봄 연주회 · 開演 18:30</p>
+        <p class="g-title">벚꽃이 지는 소리를<br>너와 들었다</p>
+        <p class="g-sub">공연 중에는 휴대전화를 무음으로 해 주세요.<br>다만 이 연주회는 소리가 있어야 완성됩니다.</p>
+        <div class="g-act"><button type="button" data-gate="sound">${RedseaIntro.icon}<span>소리 켜고 입장</span></button><button type="button" data-gate="quiet">무음으로 관람</button></div>
+      </div>`,
+    enter(g, k) {
+      if (k) {
+        k.tone({ type: 'sawtooth', freq: 440, dur: 1.7, vol: .05, attack: .55, cut: 1700 });
+        k.tone({ type: 'sawtooth', freq: 220, dur: 1.9, vol: .045, attack: .7, cut: 900 });
+        k.tone({ type: 'sawtooth', freq: 110, dur: 2, vol: .035, attack: .8, cut: 500 });
+        [0, 4, 7, 12, 16, 19, 24].forEach((n, i) => key(k, n, 1.15 + i * .075, .065));
+        [-12, -5, 4].forEach(n => k.tone({ freq: hz(n), at: 1.75, dur: 3.2, vol: .04, attack: .4 }));
+      }
+      return 2550;
+    },
+    bed(k) {
+      const MOTIF = [4, 7, 4, 2, 0, 4, 7, 4], STEP = 60 / 72, PAD = [[-12, -8, -5], [-15, -8, -3]];
+      let round = 0;
+      const phrase = () => {
+        const up = round++ % 2 ? 12 : 0;
+        MOTIF.forEach((n, i) => key(k, n + up, .2 + i * STEP, .045));
+        PAD.forEach((ch, bar) => ch.forEach(n => k.tone({ freq: hz(n), at: .2 + bar * 4 * STEP, dur: 4 * STEP + .6, vol: .022, attack: .5 })));
+      };
+      phrase();
+      const stop = k.every(Math.round(12 * STEP * 1000), phrase);
+      const room = k.wash({ type: 'lowpass', freq: 600, q: .2, vol: .006 });
+      return () => { stop(); room.stop(); };
+    }
+  });
 })();

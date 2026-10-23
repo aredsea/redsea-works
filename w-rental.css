@@ -331,7 +331,7 @@ body[data-mode="akari"] .rn-after-hours { background: #000; }
 .ak-rules li { padding: 18px 18px 0 0; }
 .ak-rules b { font: 400 26px/1.15 var(--poster); color: #ff2a2a; }
 .ak-rules p { margin: 8px 0 0; font-size: 14px; color: #f0cfca; }
-body.is-turning[data-mode="akari"] main { animation: ak-turn .55s steps(2, jump-none) both; }
+body.is-turning[data-mode="akari"] main { animation: ak-turn .55s steps(2, jump-none) backwards; }
 @keyframes ak-turn { 0% { filter: invert(1) hue-rotate(180deg); } 30% { filter: none; transform: translateX(-6px); } 60% { transform: translateX(4px); } 100% { transform: none; } }
 body[data-mode="akari"] .rn-exit { background: #e0101b; color: #fff; border-color: #e0101b; }
 
@@ -378,10 +378,58 @@ body[data-mode="ruri"] .rn-desk-body::after { content: "루리 · 04:12 기다�
 .ru-deal [aria-pressed="true"] { background: #5a2140; color: #fbeef0; }
 .ru-deal-out { margin: 14px 0 0 !important; font-weight: 700; color: #a8476d !important; }
 body.is-agreed .ru-msg .ru-cancel { text-decoration: none; }
-body.is-turning[data-mode="ruri"] main { animation: ru-turn .7s ease-out both; }
+body.is-turning[data-mode="ruri"] main { animation: ru-turn .7s ease-out backwards; }
 @keyframes ru-turn { from { opacity: .3; filter: blur(3px); } to { opacity: 1; filter: none; } }
 
 /* ---- narrow ------------------------------------------------------------------ */
+/* ---- the way in -------------------------------------------------------------- */
+.gate-rental { --gate-bg: #0b0807; color: var(--cream); font-family: var(--sans); }
+.gate-rental::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(0deg, rgb(10 7 6 / .94) 0, rgb(10 7 6 / .6) 30%, rgb(10 7 6 / 0) 58%); transition: opacity .3s ease-out; }
+.gate-rental.is-open::after { opacity: 0; }
+.g-defs { position: absolute; }
+.gate-rental .g-frame > img { object-fit: cover; }
+/* the agency's mark, dyed into each panel of the noren */
+.gate-rental .g-kanji { position: absolute; top: 19%; width: 12.5%; aspect-ratio: 1; display: grid; place-items: center; transform: translateX(-50%); font: 900 calc(max(100vw, 150svh) * .058)/1 "Noto Serif KR", serif; color: #f1e4d2; border: calc(max(100vw, 150svh) * .0032) solid currentColor; border-radius: 50%; opacity: .84; filter: url(#g-rough); }
+.gate-rental .g-l .g-kanji { left: 39.4%; }
+.gate-rental .g-r .g-kanji { left: 62.4%; }
+.gate-rental .g-half { transition: transform 1s cubic-bezier(.7, 0, .2, 1) .48s; }
+.gate-rental.is-open .g-l { transform: translateX(-56%); }
+.gate-rental.is-open .g-r { transform: translateX(56%); }
+.gate-rental .g-glow { position: absolute; inset: 0 auto 0 50%; z-index: 0; width: 46vw; transform: translateX(-50%) scaleX(.04); background: radial-gradient(closest-side, rgb(255 196 120 / .9), rgb(255 150 70 / .3) 60%, rgb(255 150 70 / 0)); opacity: 0; }
+.gate-rental.is-open .g-glow { animation: g-glow 1.2s ease-out .45s both; }
+@keyframes g-glow { 30% { opacity: 1; } to { opacity: 0; transform: translateX(-50%) scaleX(2.6); } }
+.gate-rental.is-open .g-scene { animation: g-jolt .2s ease-out .16s; }
+@keyframes g-jolt { 30% { transform: translate(5px, 3px); } 60% { transform: translate(-3px, -1px); } }
+/* rain, two sheets at two speeds */
+.gate-rental .g-rain { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+.gate-rental .g-rain::before, .gate-rental .g-rain::after { content: ""; position: absolute; inset: -260px 0 0; background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' stroke='white' stroke-width='1' stroke-linecap='round' stroke-opacity='.55'><line x1='58.3' y1='27.2' x2='54.4' y2='51.6'/><line x1='13.0' y1='96.5' x2='9.9' y2='116.3'/><line x1='10.4' y1='91.3' x2='8.1' y2='105.9'/><line x1='78.1' y1='12.6' x2='75.6' y2='28.0'/><line x1='76.4' y1='148.8' x2='73.9' y2='164.8'/><line x1='40.2' y1='112.9' x2='35.5' y2='142.1'/><line x1='103.9' y1='71.4' x2='99.1' y2='101.0'/><line x1='8.4' y1='154.5' x2='5.4' y2='173.2'/><line x1='26.0' y1='21.2' x2='22.9' y2='40.1'/><line x1='146.9' y1='32.5' x2='143.2' y2='55.8'/><line x1='115.0' y1='67.0' x2='111.4' y2='89.8'/><line x1='11.3' y1='10.7' x2='8.5' y2='28.0'/><line x1='122.5' y1='77.0' x2='119.4' y2='96.0'/><line x1='105.4' y1='81.6' x2='102.4' y2='100.4'/><line x1='143.0' y1='125.8' x2='140.1' y2='143.7'/><line x1='103.4' y1='94.5' x2='98.9' y2='122.5'/></svg>") 0 0 / 180px 180px; opacity: .42; animation: g-rain .5s linear infinite; }
+.gate-rental .g-rain::after { background-size: 260px 260px; opacity: .22; animation-duration: .78s; --fall: 260px; }
+@keyframes g-rain { to { transform: translateY(var(--fall, 180px)); } }
+.gate-rental.is-open .g-rain { opacity: 0; transition: opacity .6s ease-out .7s; }
+/* the sign over the door hums on */
+.gate-rental .g-neon { position: absolute; z-index: 2; right: clamp(16px, 6vw, 110px); top: max(84px, 13svh); margin: 0; padding: .3em .18em; writing-mode: vertical-rl; font: 900 clamp(30px, 4.6vw, 66px)/1 "Noto Serif KR", serif; letter-spacing: .14em; color: #ffe1e5; border: 2px solid rgb(255 128 148 / .6); border-radius: 10px; text-shadow: 0 0 4px #ff6b81, 0 0 14px #ff2d55, 0 0 36px #e0102f; box-shadow: 0 0 22px rgb(255 45 85 / .45), inset 0 0 18px rgb(255 45 85 / .3); animation: g-neon 2.2s steps(1) .5s both; }
+.gate-rental .g-neon span:nth-child(2) { animation: g-buzz 6.5s steps(1) 3.4s infinite; }
+@keyframes g-neon { 0% { opacity: .05; } 8% { opacity: 1; } 11% { opacity: .12; } 16% { opacity: 1; } 23% { opacity: .3; } 26%, 100% { opacity: 1; } }
+@keyframes g-buzz { 0%, 92%, 96%, 100% { opacity: 1; } 93%, 97% { opacity: .25; } }
+.gate-rental .g-copy { gap: 12px; }
+.gate-rental .g-time { font: 500 12px/1 var(--mono); letter-spacing: .22em; color: var(--brass); }
+.gate-rental .g-title { font: 900 clamp(30px, 4.6vw, 60px)/1.2 "Noto Serif KR", serif; letter-spacing: -.02em; text-shadow: 0 2px 24px rgb(0 0 0 / .7); }
+.gate-rental .g-sub { font: 400 15px/1.6 var(--serif); color: var(--mute); }
+.gate-rental [data-gate] { border-radius: 2px; font-weight: 700; font-size: 15px; }
+.gate-rental [data-gate="sound"] { border: 0; background: var(--wine); color: #fff4ea; box-shadow: 0 12px 30px -10px rgb(163 32 44 / .8); }
+.gate-rental [data-gate="sound"]:hover { background: #bb2a3b; }
+.gate-rental [data-gate="quiet"] { border: 1px solid rgb(239 230 216 / .4); background: rgb(18 13 12 / .55); color: var(--text); }
+.gate-rental [data-gate="quiet"]:hover { border-color: var(--cream); }
+/* the stamp lands on the glass */
+.gate-rental .g-stamp { position: absolute; z-index: 5; left: 50%; top: 40%; width: clamp(118px, 14vw, 184px); aspect-ratio: 1; display: grid; place-items: center; writing-mode: vertical-rl; font: 900 clamp(40px, 4.8vw, 62px)/1 "Noto Serif KR", serif; letter-spacing: .04em; color: #dc2c3f; border: .085em solid currentColor; border-radius: 12%; opacity: 0; transform: translate(-50%, -50%) rotate(-9deg); filter: url(#g-rough); pointer-events: none; }
+.gate-rental.is-open .g-stamp { animation: g-stamp .26s cubic-bezier(.2, 1.3, .4, 1) both, g-lift .45s ease-out .95s forwards; }
+@keyframes g-stamp { from { opacity: 0; transform: translate(-50%, -50%) rotate(-16deg) scale(2.3); } to { opacity: .94; transform: translate(-50%, -50%) rotate(-9deg) scale(1); } }
+@keyframes g-lift { to { opacity: 0; transform: translate(-50%, -50%) rotate(-9deg) scale(1.06); } }
+.gate-rental.is-open { opacity: 0; transition: opacity .3s ease-out 1.2s; }
+.rn-top .snd { color: var(--text); }
+@media (max-width: 760px) { .rn-mark, .rn-back { white-space: nowrap; } }
+@media (max-width: 760px) { .gate-rental .g-neon { top: 68px; right: 12px; font-size: 22px; border-radius: 7px; } }
+
 @media (max-width: 1080px) {
   .rn-nav { display: none; }
   .rn-back { margin-left: auto; }

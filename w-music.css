@@ -186,6 +186,37 @@ p, li { text-wrap: pretty; }
 .mu-next b { font: 800 22px/1.2 var(--serif); color: var(--ink); }
 .mu-next:hover b { color: var(--sakura-2); }
 
+/* ---- the way in -------------------------------------------------------------- */
+.gate-music { --gate-bg: #1c1418; font-family: var(--sans); }
+.gate-music .g-sheet { position: absolute; inset: 0; transition: transform 1.3s cubic-bezier(.65, 0, .25, 1) .95s; }
+.gate-music .g-sheet > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gate-music .g-sheet::after { content: ""; position: absolute; inset: auto 0 -16px; height: 16px; background: repeating-linear-gradient(90deg, #c9a466 0 3px, #8a6a38 3px 6px); -webkit-mask-image: linear-gradient(#000, rgb(0 0 0 / .2)); mask-image: linear-gradient(#000, rgb(0 0 0 / .2)); }
+.gate-music.is-open .g-sheet { transform: translateY(calc(-100% - 20px)); }
+.gate-music .g-spot { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 24% 36% at 50% 40%, rgb(255 238 222 / .32), rgb(255 238 222 / 0) 72%); mix-blend-mode: screen; animation: g-spot 5s ease-in-out infinite alternate; }
+@keyframes g-spot { from { opacity: .55; } to { opacity: 1; } }
+.gate-music.is-open .g-spot { opacity: 0; transition: opacity .5s ease-out .9s; animation: none; }
+.gate-music .g-petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.gate-music .g-petal { position: absolute; top: -6%; left: var(--x); width: calc(20px * var(--s)); height: auto; opacity: 0; animation: mu-fall 12s linear var(--d) infinite; }
+.gate-music.is-open .g-petals { transform: translateY(-24svh) scale(1.15); opacity: 0; transition: transform 1.8s cubic-bezier(.2, .7, .2, 1) .9s, opacity 1s ease-out 1.5s; }
+/* house lights go down before the curtain goes up */
+.gate-music .g-dim { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 30% 42% at 50% 42%, rgb(20 10 16 / 0), rgb(20 10 16 / .78)); opacity: 0; }
+.gate-music.is-open .g-dim { animation: g-dim 2.5s ease-out both; }
+@keyframes g-dim { 30%, 55% { opacity: 1; } to { opacity: 0; } }
+/* the programme */
+.gate-music .g-copy { gap: 12px; width: min(100%, 460px); padding: 28px 28px 26px; background: var(--paper); color: var(--ink); border: 1px solid var(--rule); outline: 1px solid rgb(169 135 76 / .5); outline-offset: -8px; box-shadow: 0 34px 60px -24px rgb(0 0 0 / .7); }
+.gate-music .g-time { font: italic 600 15px/1.4 var(--roman); color: var(--gold); }
+.gate-music .g-title { font: 800 clamp(24px, 3vw, 32px)/1.38 var(--serif); }
+.gate-music .g-sub { font-size: 13.5px; line-height: 1.75; color: var(--ink-2); }
+.gate-music [data-gate] { border-radius: 999px; font-weight: 700; font-size: 15px; }
+.gate-music [data-gate="sound"] { border: 0; background: var(--ink); color: var(--paper); }
+.gate-music [data-gate="sound"]:hover { background: #363c58; }
+.gate-music [data-gate="quiet"] { border: 1px solid var(--rule); background: transparent; color: var(--ink); }
+.gate-music [data-gate="quiet"]:hover { border-color: var(--gold); }
+.gate-music.is-open { opacity: 0; transition: opacity .35s ease-out 2.15s; }
+@media (max-width: 760px) { .gate-music .g-copy { padding: 22px 18px 20px; } }
+.mu-top .snd { color: var(--ink); }
+@media (max-width: 760px) { .mu-top { gap: 10px; } .mu-mark { white-space: nowrap; } .mu-back { padding: 0 12px; white-space: nowrap; } }
+
 @media (max-width: 1080px) {
   .mu-nav { display: none; }
   .mu-back { margin-left: auto; }
