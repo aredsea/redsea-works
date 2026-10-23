@@ -27,7 +27,7 @@
     [-88, '벼랑 끝', '오늘은 혼자 있고 싶지 않아요. 약속한 시간에는 꼭 와 주세요.']
   ];
   const DESK = ['reiko-azumi', 'mari-hoshino', 'shizuka-kurosawa', 'jun-kashiwagi', 'nagisa-furukawa', 'koichi-numata'].map(byId).filter(Boolean);
-  const LEDGER = people.filter(c => c.group === '주요 손님' && !['akari-mizutani', 'ruri-amamiya'].includes(c.id)).slice(0, 12);
+  const LEDGER = ['reiko-azumi', 'mari-hoshino', 'shizuka-kurosawa', 'ruri-amamiya', 'sumire-kuze', 'fumi-saito', 'xue-lin', 'jun-kashiwagi', 'itsuki-hayakawa', 'ren-aizawa', 'koichi-numata', 'ritsu-hasumi'].map(byId).filter(Boolean);
   const FEE = 8000, DEBT = 2000000, CASH = 300000;
   const updates = (data.updates || []).filter(u => u.project === p.id);
 
@@ -175,7 +175,7 @@
   <section class="rn-guests-book" id="guests" aria-labelledby="guests-h">
     <div class="rn-book-head"><h2 id="guests-h">손님 명부</h2><p>요이마치에 등록된 손님은 ${people.length}명. 그중 주요 손님 몇 사람입니다. 이름을 누르면 그 손님의 지명을 받아 볼 수 있습니다.</p></div>
     <ul class="rn-book">${LEDGER.map((c, i) => `<li><button type="button" data-book="${c.id}" aria-label="${esc(c.name)}의 지명 받아 보기"><span class="rn-book-no">${String(i + 1).padStart(2, '0')}</span><span class="rn-book-face">${figure(c)}</span><b>${esc(c.name)}</b><small>${esc(c.hook)}</small></button></li>`).join('')}</ul>
-    <p class="rn-book-more">외 ${people.length - LEDGER.length - 2}명의 손님 — 일반 손님 ${people.filter(c => c.group === '일반 손님').length}명은 실제 봇에서 지명으로 만납니다.</p>
+    <p class="rn-book-more">외 ${people.length - LEDGER.length}명의 손님 — 일반 손님 ${people.filter(c => c.group === '일반 손님').length}명은 실제 봇에서 지명으로 만납니다.</p>
   </section>
 
   <section class="rn-places" id="places" aria-labelledby="places-h">

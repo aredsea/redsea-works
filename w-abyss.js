@@ -197,7 +197,20 @@
 
   <section class="ab-roster" id="companions" aria-labelledby="roster-h">
     <div class="ab-roster-head"><p class="ab-chapter">III · 동료</p><h2 id="roster-h">함께 내려갈 사람들</h2><p>직업 10종, 동료 30명. 전열과 후열, 개인 스킬과 특성이 맞물려 같은 넷도 다른 파티가 됩니다. 그중 열두 명입니다.</p></div>
-    <ul class="ab-cards">${ROSTER.map(c => `<li><article class="ab-card"><span class="ab-card-art">${fig(c)}</span>${icon(c.combat?.classId || 'warrior')}<div class="ab-card-copy"><small>${esc(c.class)} · ${esc(c.row)}</small><h3>${esc(c.name)}</h3><p>${esc(c.hook)}</p></div></article></li>`).join('')}</ul>
+    <ul class="ab-forms">${ROSTER.map((c, i) => `<li><article class="ab-form" style="--tilt:${[-.6, .5, -.3, .7, -.5, .3][i % 6]}deg">
+      <header class="ab-form-head"><img class="ab-form-crest" src="${asset('identity/abyss-form-crest.webp')}" alt="" width="256" height="256"><div><b>연합 길드 토르바</b><span>동료 등록서</span></div><em>No. ${String(companions.indexOf(c) + 1).padStart(3, '0')}</em></header>
+      <div class="ab-form-body">
+        <figure class="ab-form-photo"><img class="ab-form-clip" src="${asset('identity/abyss-form-clip.webp')}" alt="" width="128" height="256">${fig(c)}<img class="ab-form-stamp" src="${asset('identity/abyss-form-stamp.webp')}" alt="" width="256" height="256"></figure>
+        <dl class="ab-form-fields">
+          <div><dt>성명</dt><dd class="is-name">${esc(c.name)}</dd></div>
+          <div><dt>직업</dt><dd>${icon(c.combat?.classId || 'warrior')}${esc(c.class)}</dd></div>
+          <div><dt>배치</dt><dd>${esc(c.row)}</dd></div>
+          <div><dt>종족 · 출신</dt><dd>${esc(c.race)} · ${esc(c.nation)}</dd></div>
+          <div><dt>고유 스킬</dt><dd>${esc(c.combat?.skillName || '')}</dd></div>
+        </dl>
+      </div>
+      <p class="ab-form-note"><span>비고</span>${esc(c.hook)}</p>
+    </article></li>`).join('')}</ul>
     <p class="ab-more">외 ${companions.length - ROSTER.length}명의 동료와 도시·세계 인물 ${city.length}명은 실제 봇의 도감에서 만납니다.</p>
   </section>
 

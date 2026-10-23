@@ -179,17 +179,6 @@ p, li { text-wrap: pretty; }
 .mu-film-copy h3 { margin: 30px 0 10px; font: 800 18px/1.4 var(--serif); }
 .mu-film-copy ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--ink-2); }
 
-/* ---- album ------------------------------------------------------------------- */
-.mu-album { padding: clamp(80px, 9vw, 130px) 0; border-top: 1px solid var(--rule); }
-.mu-album h2 { max-width: 1360px; margin: 0 auto 30px; padding: 0 var(--gut); font: 800 clamp(26px, 2.6vw, 36px)/1.3 var(--serif); }
-.mu-album h2 .mu-roman { display: block; }
-.mu-album-row { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(200px, 19vw, 280px); gap: 16px; padding: 0 var(--gut) 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; overscroll-behavior-x: contain; }
-.mu-album-row figure { margin: 0; scroll-snap-align: start; }
-.mu-album-row img { width: 100%; aspect-ratio: 3 / 4.6; object-fit: cover; object-position: 50% 6%; background: var(--paper-2); border-radius: 4px; }
-.mu-album-row .is-wide { grid-column: span 2; }
-.mu-album-row .is-wide img { aspect-ratio: auto; height: calc(100% - 46px); object-position: 50% 40%; }
-.mu-album-row figcaption { margin-top: 10px; font-size: 13px; color: var(--mute); }
-
 .mu-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; padding: 40px var(--gut) max(40px, calc(24px + env(safe-area-inset-bottom))); border-top: 1px solid var(--rule); font-size: 13px; color: var(--mute); }
 .mu-foot p { margin: 0; flex: 1 1 320px; }
 .mu-next { display: grid; min-height: 44px; text-decoration: none; }
@@ -226,7 +215,6 @@ p, li { text-wrap: pretty; }
   .mu-dyn { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mu-film { grid-template-columns: 1fr; }
   .mu-phone { max-width: 300px; margin: 0 auto; }
-  .mu-album-row { grid-auto-columns: 62%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mu-petal { display: none; }

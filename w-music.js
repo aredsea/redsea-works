@@ -91,7 +91,7 @@
   main.innerHTML = `
   <header class="mu-top">
     <a class="mu-mark" href="#top" aria-label="공명 듀엣, 맨 위로"><i>R</i><span>RESONANCE DUET</span></a>
-    <nav class="mu-nav" aria-label="작품 메뉴"><a href="#programme">프로그램</a><a href="#duet">연습실</a><a href="#bond">공명</a><a href="#film">영상</a><a href="#album">앨범</a></nav>
+    <nav class="mu-nav" aria-label="작품 메뉴"><a href="#programme">프로그램</a><a href="#duet">연습실</a><a href="#bond">공명</a><a href="#film">영상</a></nav>
     <a class="mu-back" href="${base}">← Archive</a>
   </header>
 
@@ -136,11 +136,6 @@
   <section class="mu-film" id="film" aria-labelledby="film-h">
     ${film ? `<figure class="mu-phone"><video controls playsinline preload="none" poster="${asset(film.poster)}" ${size(film.poster)} aria-label="${esc(film.title)}"><source src="${asset(film.source)}" type="video/mp4"></video></figure>` : ''}
     <div class="mu-film-copy"><p class="mu-roman">Live Capture</p><h2 id="film-h">${film ? esc(film.title) : '시연'}</h2>${film ? `<p>${esc(film.caption)}</p>` : ''}<h3>시작하는 법</h3><ol>${p.guide.map(g => `<li>${esc(g)}</li>`).join('')}</ol></div>
-  </section>
-
-  <section class="mu-album" id="album" aria-labelledby="album-h">
-    <h2 id="album-h"><span class="mu-roman">Album</span>연습실 바깥의 세 사람</h2>
-    <div class="mu-album-row">${p.gallery.filter(g => /casual|selfie/.test(g.image)).map(g => `<figure class="${/selfie/.test(g.image) ? 'is-wide' : ''}"><img src="${asset(g.image)}" alt="${esc(g.alt)}" ${size(g.image)} loading="lazy"><figcaption>${esc(g.caption)}</figcaption></figure>`).join('')}</div>
   </section>
 
   <footer class="mu-foot">
