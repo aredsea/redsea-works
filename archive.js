@@ -17,7 +17,7 @@
     'rental-danjo': { display: 'RENTAL 男女', label: 'AGENCY', kind: '시뮬레이션', hook: '요이마치의 렌탈 인력이 되어 지명을 받고, 데이트하고, 보수로 빚을 갚는다.', play: ['#booking', '지명 받아 보기'], pos: '50% 22%' },
     'into-the-abyss': { display: 'INTO THE ABYSS', label: 'GUILD', kind: '시뮬레이션', hook: '도시에서 채비하고, 넷이서 심연으로 내려갔다가, 살아서 돌아온다.', play: ['#expedition', '원정 나가 보기'], pos: '50% 30%' },
     'music-story': { display: 'RESONANCE DUET', label: 'DUET', kind: '캐릭터', hook: '히비키가오카 음악학원, 세 사람과 듣고 따라 치는 공명 듀엣.', play: ['#duet', '같이 연주해 보기'], pos: '50% 40%' },
-    'yoo-hyeyeon': { display: 'HYEYEON YOO', label: 'IN PROGRESS', kind: '캐릭터', hook: '닿지 않았으면 싶었다. 23세 사회 초년생 유혜연의 첫 장.', play: ['#ice', '첫 장 읽기'], pos: '68% 20%' }
+    'yoo-hyeyeon': { display: 'HYEYEON YOO', label: 'ROMANCE', kind: '캐릭터', hook: '닿지 않았으면 싶었다. 23세 사회 초년생 유혜연의 첫 장.', play: ['#ice', '첫 장 읽기'], pos: '68% 20%' }
   };
   const works = data.projects.filter(p => face[p.id]);
   const byDate = [...works].sort((a, b) => String(b.updated).localeCompare(String(a.updated)));

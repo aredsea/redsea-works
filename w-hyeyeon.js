@@ -71,10 +71,25 @@
       <path class="hy-cup-shine" d="M26 30l8 118"/>
     </svg>`;
 
+  const NOW = [
+    ['EVENT', '큰 사건', '이야기 시간으로 약 한 달마다 혜연의 삶에 되돌릴 수 없는 일이 생깁니다. 정해진 목록이 아니라 모델이 지금까지의 이야기를 보고 지어냅니다.'],
+    ['PHONE', '카톡과 스레드', '사원증 버튼을 누르면 카톡과 스레드가 열립니다. 카톡 프로필 사진은 혜연의 기분 따라 바뀝니다.'],
+    ['PICTURE', '본문 속 그림', '문단 사이에 그때의 옷·표정·장소를 맞춘 그림이 들어갑니다. 몇 장을 넣을지는 모델이 정합니다.'],
+    ['BODY', '몸과 날씨', '멘탈과 컨디션, 생리 주기, 서울의 계절 날씨가 이야기에 반영됩니다.']
+  ];
+  const SCENES = [
+    ['이별', '삼십 분째 얼음만 먹던 날, 그녀가 먼저 꺼낸 말'],
+    ['재회', '비 오는 정류장, 2년 만에 마주친 스터디 동기'],
+    ['소개팅', '십 분 늦게 들어온 소개팅 상대가 나를 관찰한다'],
+    ['소꿉친구', '모의고사를 망친 밤, 편의점 앞으로 불려 나간 소꿉친구'],
+    ['우연한 만남', '답글 하나로 시작된, 오늘 처음 보는 얼굴'],
+    ['선배의 연인', '선배 결혼식 뒤풀이, 남자친구를 기다리는 몇 년 만의 과 동기']
+  ];
+
   main.innerHTML = `
   <header class="hy-top">
-    <a class="hy-mark" href="#top">유혜연 <span>HYEYEON YOO · 제작 중</span></a>
-    <nav class="hy-nav" aria-label="작품 메뉴"><a href="#ice">첫 장</a><a href="#person">인물</a><a href="#days">생활</a><a href="#bond">관계</a></nav>
+    <a class="hy-mark" href="#top">유혜연 <span>HYEYEON YOO</span></a>
+    <nav class="hy-nav" aria-label="작품 메뉴"><a href="#ice">첫 장</a><a href="#person">인물</a><a href="#days">생활</a><a href="#bond">관계</a><a href="#now">기능</a></nav>
     <a class="hy-back" href="${base}">← archive</a>
   </header>
 
@@ -118,7 +133,7 @@
   </section>
 
   <section class="hy-bond" id="bond" aria-labelledby="bond-h">
-    <div class="hy-bond-head"><h2 id="bond-h">호감이 변해도,<br>있었던 일은 남도록.</h2><p>${esc(p.overview[3] || '')}</p><p class="hy-wip">개발 중인 관계 엔진 · 규칙 설명</p></div>
+    <div class="hy-bond-head"><h2 id="bond-h">호감이 변해도,<br>있었던 일은 남도록.</h2><p>${esc(p.overview[3] || '')}</p><p class="hy-wip">관계 엔진 · 규칙 설명</p></div>
     <div class="hy-lab">
       <figure class="hy-diagram" aria-hidden="true">${diagram()}</figure>
       <div class="hy-lab-side">
@@ -129,16 +144,25 @@
     </div>
     <ol class="hy-steps"><li data-step="0"><span>01</span><b>상호작용</b><p>말과 행동을 다섯 방향에서 봅니다.</p></li><li data-step="1"><span>02</span><b>의미 있는 사건</b><p>혜연에게 중요한 일일 때만 변화가 커집니다. 좋고 나쁨의 방향은 그대로입니다.</p></li><li data-step="2"><span>03</span><b>호감도와 사건 기억</b><p>호감도가 상한에 닿아도 사건은 기억합니다.</p></li></ol>
     <div class="hy-result">
-      <div class="hy-meter"><p><span>거리둠</span><b data-mood>아직 아무 일도 없었다</b><span>다가감</span></p><div class="hy-meter-track"><i data-mark></i></div><p class="hy-meter-note" data-cap aria-live="polite">수치는 확정 전이라 방향과 크기만 보여 줍니다.</p></div>
+      <div class="hy-meter"><p><span>거리둠</span><b data-mood>아직 아무 일도 없었다</b><span>다가감</span></p><div class="hy-meter-track"><i data-mark></i></div><p class="hy-meter-note" data-cap aria-live="polite">예시라서 방향과 크기만 보여 줍니다.</p></div>
       <article class="hy-mem is-warm" data-mem="warm"><span>다가감 · 최근의 긍정적 사건</span><p>관계가 가까워진 전환점을 한 건 기억합니다.</p></article>
       <article class="hy-mem is-cold" data-mem="cold"><span>거리둠 · 최근의 부정적 사건</span><p>평범한 대화를 했다는 이유만으로 거리감이 저절로 사라지지는 않습니다.</p></article>
     </div>
-    <p class="hy-status">위 장면은 규칙의 흐름을 보여 주는 예시이며 실제 봇의 판정이 아닙니다. 긍정·부정 사건은 각각 최근 한 건을 남깁니다. 관계 단계와 연애 전환은 아직 구현 중이고, 실제 RisuAI와 모델을 연결한 품질 검증도 남아 있습니다. 점수의 초기값·범위·배율은 확정되지 않았습니다.</p>
+    <p class="hy-status">위 장면은 규칙의 흐름을 보여 주는 예시이며 실제 봇의 판정이 아닙니다. 긍정·부정 사건은 각각 최근 한 건을 남깁니다.</p>
+  </section>
+
+  <section class="hy-now" id="now" aria-labelledby="now-h">
+    <h2 id="now-h">그 밖에, 혜연의 하루에 일어나는 일</h2>
+    <ol class="hy-toc">${NOW.map(([k, h, t]) => `<li><span>${k}</span><div><h3>${h}</h3><p>${t}</p></div></li>`).join('')}</ol>
+    <div class="hy-scenes">
+      <h3>여섯 가지 첫 장면</h3>
+      <ol>${SCENES.map(([h, t], i) => `<li><span>${i + 1}</span><div><b>${h}</b><p>${t}</p></div></li>`).join('')}</ol>
+    </div>
   </section>
 
   <footer class="hy-foot">
     <a class="hy-next" href="${base}projects/rental-danjo/"><small>처음 작품으로</small><b>렌탈남녀</b></a>
-    <p>© 2026 redsea works · 유혜연 ${esc(p.version)} · 제작 중. ${esc(p.note)} 이미지에 AI 생성 및 편집 자료가 포함됩니다. <a href="${base}credits/">저작권 · 크레딧</a></p>
+    <p>© 2026 redsea works · 유혜연 ${esc(p.version)}. ${esc(p.note)} 이미지에 AI 생성 및 편집 자료가 포함됩니다. <a href="${base}credits/">저작권 · 크레딧</a></p>
     <a class="hy-back" href="${base}">← archive</a>
   </footer>`;
 
@@ -213,7 +237,7 @@
       lab.querySelector('[data-mark]').style.left = `${50 + level * 46}%`;
       lab.querySelector('[data-mood]').textContent = level > .6 ? '많이 가까워졌다' : level > .15 ? '조금 가까워졌다' : level < -.6 ? '거리가 멀어졌다' : level < -.15 ? '조금 멀어졌다' : '제자리에 가깝다';
       lab.querySelector('[data-core]').textContent = m.sign > 0 ? (m.big ? '크게 다가감' : '다가감') : (m.big ? '크게 거리둠' : '거리둠');
-      lab.querySelector('[data-cap]').textContent = capped ? '상한에 닿았습니다. 호감도는 더 움직이지 않지만, 이 사건은 기억에 남습니다.' : m.big ? '혜연에게 의미 있는 일이라 변화가 커졌습니다. 방향은 그대로입니다.' : '수치는 확정 전이라 방향과 크기만 보여 줍니다.';
+      lab.querySelector('[data-cap]').textContent = capped ? '상한에 닿았습니다. 호감도는 더 움직이지 않지만, 이 사건은 기억에 남습니다.' : m.big ? '혜연에게 의미 있는 일이라 변화가 커졌습니다. 방향은 그대로입니다.' : '예시라서 방향과 크기만 보여 줍니다.';
       const mem = lab.querySelector(`[data-mem="${m.sign > 0 ? 'warm' : 'cold'}"]`);
       mem.querySelector('p').textContent = m.text;
       mem.classList.remove('is-new'); void mem.offsetWidth; mem.classList.add('is-new');

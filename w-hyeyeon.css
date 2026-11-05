@@ -127,6 +127,15 @@ p, li { text-wrap: pretty; }
 .hy-desk { margin: 0; }
 .hy-desk img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .hy-desk figcaption { margin-top: 10px; font: 400 15px/1.5 var(--book); color: var(--mute); }
+.hy-now { max-width: 1320px; margin: 0 auto; padding: 0 var(--gut) clamp(90px, 10vw, 150px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px clamp(30px, 6vw, 90px); }
+.hy-now h2 { grid-column: 1 / -1; margin: 0; font: 700 clamp(24px, 2.4vw, 32px)/1.4 var(--book); }
+.hy-now .hy-toc li { grid-template-columns: 96px 1fr; }
+.hy-scenes h3 { margin: 0; padding-bottom: 14px; font: 700 18px/1.5 var(--book); border-bottom: 1px solid var(--ink); }
+.hy-scenes ol { list-style: none; margin: 0; padding: 0; }
+.hy-scenes li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.hy-scenes li > span { font: italic 400 17px/1.6 var(--latin); color: var(--blue); }
+.hy-scenes b { font: 700 16px/1.5 var(--book); }
+.hy-scenes p { margin: 2px 0 0; font-size: 14px; color: var(--ink-2); }
 .hy-toc { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); align-self: start; }
 .hy-toc li { display: grid; grid-template-columns: 96px 1fr 30px; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
 .hy-toc span { font: italic 400 15px/1.8 var(--latin); letter-spacing: .06em; color: var(--blue); }
@@ -252,7 +261,8 @@ p, li { text-wrap: pretty; }
   .hy-margin { display: none; }
   .hy-page { font-size: 17px; line-height: 2; }
   .hy-page .hy-lede { font-size: 20px; }
-  .hy-person, .hy-days { grid-template-columns: 1fr; }
+  .hy-person, .hy-days, .hy-now { grid-template-columns: 1fr; }
+  .hy-now .hy-toc li { grid-template-columns: 78px 1fr; }
   .hy-bond-head { grid-template-columns: 1fr; }
   .hy-bond-head h2 { grid-row: auto; }
   .hy-lab { grid-template-columns: 1fr; }
