@@ -31,15 +31,15 @@
     return `<p class="${cls}">${esc(t)}</p>`;
   }).join('');
 
-  const AXES = [['존중', '상대를 동등한 사람으로 대하는 태도.'], ['이해', '상대의 상황과 마음을 알아보는 반응.'], ['유능함', '일을 판단하고 해내는 모습.'], ['호의', '자신에게 향하는 관심과 친절.'], ['매력', '끌림을 느끼게 하는 인상.']];
+  const AXES = [['존중', '상대를 동등한 사람으로 대하는 태도.'], ['이해', '상대의 상황과 마음을 알아보는 반응.'], ['믿음', '약속을 지키고 끝까지 책임지는 모습.'], ['호흡', '함께 보내는 시간과 주고받는 장난의 결.'], ['매력', '끌림을 느끼게 하는 인상.']];
   // Example moments only: they show which way the rule moves, not what the engine scores.
   const MOMENTS = [
-    { id: 'snack', sign: 1, axes: ['호의', '이해'], text: '시험 공부 중인 혜연에게 야식을 사 들고 갔다' },
+    { id: 'snack', sign: 1, axes: ['호흡', '이해'], text: '시험 공부 중인 혜연에게 야식을 사 들고 갔다' },
     { id: 'ask', sign: 1, axes: ['존중', '이해'], text: '약속을 정하기 전에 혜연의 일정을 먼저 물었다' },
-    { id: 'work', sign: 1, axes: ['유능함', '호의'], text: '회사 일로 막힌 혜연과 같이 해결 방법을 찾았다' },
-    { id: 'result', sign: 1, big: true, axes: ['이해', '호의', '매력'], text: '시험 결과가 나온 날, 결과보다 혜연을 먼저 챙겼다' },
+    { id: 'work', sign: 1, axes: ['믿음', '호흡'], text: '회사 일로 막힌 혜연과 같이 해결 방법을 찾았다' },
+    { id: 'result', sign: 1, big: true, axes: ['이해', '호흡', '매력'], text: '시험 결과가 나온 날, 결과보다 혜연을 먼저 챙겼다' },
     { id: 'public', sign: -1, axes: ['존중', '이해'], text: '혜연의 실수를 다른 사람 앞에서 지적했다' },
-    { id: 'dismiss', sign: -1, big: true, axes: ['존중', '이해', '호의'], text: '혜연이 붙들고 있는 공부를 대수롭지 않게 말했다' }
+    { id: 'dismiss', sign: -1, big: true, axes: ['존중', '이해', '호흡'], text: '혜연이 붙들고 있는 공부를 대수롭지 않게 말했다' }
   ];
   const C = { x: 300, y: 250 }, R = 178;
   const NODE = AXES.map(([a], i) => { const t = (-90 + 72 * i) * Math.PI / 180; return { a, x: C.x + R * Math.cos(t), y: C.y + R * Math.sin(t), t }; });
